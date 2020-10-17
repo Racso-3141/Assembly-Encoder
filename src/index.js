@@ -10,8 +10,6 @@ class R_common extends React.Component {
       rs: "",
       rt: "",
       rd: "",
-      isSubmitted: false,
-      result: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,10 +18,7 @@ class R_common extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
   handleSubmit(event) {
-    this.setState({
-      isSubmitted: true, 
-      result: encode.encode_R_common(this.props.operation, this.state.rs, this.state.rt, this.state.rd)
-    });
+    this.props.parentCallback(encode.encode_R_common(this.props.operation, this.state.rs, this.state.rt, this.state.rd));
     event.preventDefault();
   }
   render() {
@@ -48,7 +43,6 @@ class R_common extends React.Component {
           &nbsp;
           <input type="submit" value="Encode" />
         </form>
-        <h1>{this.state.isSubmitted && this.state.result}</h1>
       </div>
     );
   }
@@ -62,8 +56,6 @@ class R_shift extends React.Component {
       rd: "",
       rt: "",
       shamt: "",
-      isSubmitted: false,
-      result: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -72,10 +64,7 @@ class R_shift extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
   handleSubmit(event) {
-    this.setState({
-      isSubmitted: true, 
-      result: encode.encode_R_shift(this.props.operation, this.state.rd, this.state.rt, this.state.shamt)
-    });
+    this.props.parentCallback(encode.encode_R_shift(this.props.operation, this.state.rd, this.state.rt, this.state.shamt));
     event.preventDefault();
   }
   render() {
@@ -99,7 +88,6 @@ class R_shift extends React.Component {
           &nbsp;
           <input type="submit" value="Encode" />
         </form>
-        <h1>{this.state.isSubmitted && this.state.result}</h1>
       </div>
     );
   }
@@ -111,8 +99,6 @@ class R_jr extends React.Component {
     this.state = {
       expression: "R_jr", 
       rs: "",
-      isSubmitted: false,
-      result: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -121,10 +107,7 @@ class R_jr extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
   handleSubmit(event) {
-    this.setState({
-      isSubmitted: true, 
-      result: encode.encode_R_jr(this.props.operation, this.state.rs)
-    });
+    this.props.parentCallback(encode.encode_R_jr(this.props.operation, this.state.rs));
     event.preventDefault();
   }
   render() {
@@ -139,7 +122,6 @@ class R_jr extends React.Component {
           &nbsp;
           <input type="submit" value="Encode" />
         </form>
-        <h1>{this.state.isSubmitted && this.state.result}</h1>
       </div>
     );
   }
@@ -153,8 +135,6 @@ class I_common extends React.Component {
       rt: "",
       rs: "",
       imm: "",
-      isSubmitted: false,
-      result: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -163,10 +143,7 @@ class I_common extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
   handleSubmit(event) {
-    this.setState({
-      isSubmitted: true, 
-      result: encode.encoder_I_common(this.props.operation, this.state.rt, this.state.rs, this.state.imm)
-    });
+    this.props.parentCallback(encode.encoder_I_common(this.props.operation, this.state.rt, this.state.rs, this.state.imm));
     event.preventDefault();
   }
   render() {
@@ -204,8 +181,6 @@ class I_bitwise extends React.Component {
       rt: "",
       rs: "",
       hex: "",
-      isSubmitted: false,
-      result: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -214,10 +189,7 @@ class I_bitwise extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
   handleSubmit(event) {
-    this.setState({
-      isSubmitted: true, 
-      result: encode.encoder_I_bitwise(this.props.operation, this.state.rt, this.state.rs, this.state.hex)
-    });
+    this.props.parentCallback(encode.encoder_I_bitwise(this.props.operation, this.state.rt, this.state.rs, this.state.hex));
     event.preventDefault();
   }
   render() {
@@ -242,7 +214,6 @@ class I_bitwise extends React.Component {
           &nbsp;
           <input type="submit" value="Encode" />
         </form>
-        <h1>{this.state.isSubmitted && this.state.result}</h1>
       </div>
     );
   }
@@ -256,8 +227,6 @@ class I_branch extends React.Component {
       rs: "",
       rt: "",
       label: "",
-      isSubmitted: false,
-      result: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -266,10 +235,7 @@ class I_branch extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
   handleSubmit(event) {
-    this.setState({
-      isSubmitted: true, 
-      result: encode.encoder_I_branch(this.props.operation, this.state.rs, this.state.rt, this.state.label)
-    });
+    this.props.parentCallback(encode.encoder_I_branch(this.props.operation, this.state.rs, this.state.rt, this.state.label));
     event.preventDefault();
   }
   render() {
@@ -293,7 +259,6 @@ class I_branch extends React.Component {
           &nbsp;
           <input type="submit" value="Encode" />
         </form>
-        <h1>{this.state.isSubmitted && this.state.result}</h1>
       </div>
     );
   }
@@ -307,8 +272,6 @@ class I_ls extends React.Component {
       rt: "",
       imm: "",
       rs: "",
-      isSubmitted: false,
-      result: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -317,10 +280,7 @@ class I_ls extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
   handleSubmit(event) {
-    this.setState({
-      isSubmitted: true, 
-      result: encode.encoder_I_ls(this.props.operation, this.state.rt, this.state.imm, this.state.rs)
-    });
+    this.props.parentCallback(encode.encoder_I_ls(this.props.operation, this.state.rt, this.state.imm, this.state.rs));
     event.preventDefault();
   }
   render() {
@@ -357,8 +317,6 @@ class I_lui extends React.Component {
       expression: "I_lui",
       rt: "",
       imm: "",
-      isSubmitted: false,
-      result: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -367,10 +325,7 @@ class I_lui extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
   handleSubmit(event) {
-    this.setState({
-      isSubmitted: true, 
-      result: encode.encoder_I_ls(this.props.operation, this.state.rt, this.state.imm)
-    });
+    this.props.parentCallback(encode.encoder_I_lui(this.props.operation, this.state.rt, this.state.imm))
     event.preventDefault();
   }
   render() {
@@ -389,7 +344,6 @@ class I_lui extends React.Component {
           &nbsp;
           <input type="submit" value="Encode" />
         </form>
-        <h1>{this.state.isSubmitted && this.state.result}</h1>
       </div>
     );
   }
@@ -401,8 +355,6 @@ class J extends React.Component {
     this.state = {
       expression: "J",
       label:"",
-      isSubmitted: false,
-      result: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -411,10 +363,7 @@ class J extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
   handleSubmit(event) {
-    this.setState({
-      isSubmitted: true, 
-      result: encode.encoder_J(this.props.operation, this.state.label)
-    });
+    this.props.parentCallback(encode.encoder_J(this.props.operation, this.state.label));
     event.preventDefault();
   }
   render() {
@@ -440,14 +389,21 @@ class Encode extends React.Component {
     super(props)
     this.state = {
       expression: "default",
-      operation: ""
+      operation: "", 
+      result:"666"
     };
     this.handleChange = this.handleChange.bind(this);
+    this.getResult = this.getResult.bind(this);
   }
   handleChange(event) {
     this.setState({
       expression: event.target.value,
       operation: event.nativeEvent.target[event.nativeEvent.target.selectedIndex].text
+    });
+  }
+  getResult(childData) {
+    this.setState({
+        result: childData
     });
   }
   render() {
@@ -457,23 +413,23 @@ class Encode extends React.Component {
     if (expression === "default") {
       ui = (<h1>Select a function above</h1>)
     } else if (expression === "R_common") {
-      ui = <R_common operation = {operation}/>
+      ui = <R_common operation = {operation} parentCallback = {this.getResult}/>
     } else if(expression === "R_shift") {
-      ui = <R_shift operation = {operation}/>
+      ui = <R_shift operation = {operation} parentCallback = {this.getResult}/>
     } else if(expression === "R_jr") {
-      ui = <R_jr operation = {operation}/>
+      ui = <R_jr operation = {operation} parentCallback = {this.getResult}/>
     } else if(expression === "I_common") {
-      ui = <I_common operation = {operation}/>
+      ui = <I_common operation = {operation} parentCallback = {this.getResult}/>
     } else if(expression === "I_bitwise") {
-      ui = <I_bitwise operation = {operation}/>
+      ui = <I_bitwise operation = {operation} parentCallback = {this.getResult}/>
     } else if(expression === "I_branch") {
-      ui = <I_branch operation = {operation}/>
+      ui = <I_branch operation = {operation} parentCallback = {this.getResult}/>
     } else if(expression === "I_ls") {
-      ui = <I_ls operation = {operation}/>
+      ui = <I_ls operation = {operation} parentCallback = {this.getResult}/>
     } else if(expression === "I_lui") {
-      ui = <I_lui operation = {operation}/>
+      ui = <I_lui operation = {operation} parentCallback = {this.getResult}/>
     } else if(expression === "J") {
-      ui= <J operation = {operation}/>
+      ui= <J operation = {operation} parentCallback = {this.getResult}/>
     }
     return (
       <div>
@@ -522,6 +478,7 @@ class Encode extends React.Component {
           </label>
         </form>
         {ui}
+        {this.state.result}
       </div>
     );
   }
