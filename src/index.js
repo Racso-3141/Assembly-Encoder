@@ -19,6 +19,9 @@ class R_common extends React.Component {
   }
   handleSubmit(event) {
     this.props.parentCallback(encode.encode_R_common(this.props.operation, this.state.rs, this.state.rt, this.state.rd));
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
     event.preventDefault();
   }
   render() {
@@ -65,6 +68,9 @@ class R_shift extends React.Component {
   }
   handleSubmit(event) {
     this.props.parentCallback(encode.encode_R_shift(this.props.operation, this.state.rd, this.state.rt, this.state.shamt));
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
     event.preventDefault();
   }
   render() {
@@ -108,6 +114,9 @@ class R_jr extends React.Component {
   }
   handleSubmit(event) {
     this.props.parentCallback(encode.encode_R_jr(this.props.operation, this.state.rs));
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
     event.preventDefault();
   }
   render() {
@@ -144,6 +153,9 @@ class I_common extends React.Component {
   }
   handleSubmit(event) {
     this.props.parentCallback(encode.encoder_I_common(this.props.operation, this.state.rt, this.state.rs, this.state.imm));
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
     event.preventDefault();
   }
   render() {
@@ -173,52 +185,6 @@ class I_common extends React.Component {
   }
 }
 
-class I_bitwise extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      expression: "I_bitwise", 
-      rt: "",
-      rs: "",
-      hex: "",
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  handleChange(event) {
-    this.setState({[event.target.name]: event.target.value});
-  }
-  handleSubmit(event) {
-    this.props.parentCallback(encode.encoder_I_bitwise(this.props.operation, this.state.rt, this.state.rs, this.state.hex));
-    event.preventDefault();
-  }
-  render() {
-    return (
-      <div>
-        <h2>I_bitwise</h2>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            $
-          <input type="text" name="rt" onChange={this.handleChange}/>
-          ，
-          </label>
-          <label>
-            $
-          <input type="text" name="rs" onChange={this.handleChange}/>
-          ，
-          </label>
-          <label>
-            <strong>0x</strong>
-          <input type="text" name="hex" onChange={this.handleChange}/>
-          </label>
-          &nbsp;
-          <input type="submit" value="Encode" />
-        </form>
-      </div>
-    );
-  }
-}
-
 class I_branch extends React.Component {
   constructor(props) {
     super(props)
@@ -236,6 +202,9 @@ class I_branch extends React.Component {
   }
   handleSubmit(event) {
     this.props.parentCallback(encode.encoder_I_branch(this.props.operation, this.state.rs, this.state.rt, this.state.label));
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
     event.preventDefault();
   }
   render() {
@@ -281,6 +250,9 @@ class I_ls extends React.Component {
   }
   handleSubmit(event) {
     this.props.parentCallback(encode.encoder_I_ls(this.props.operation, this.state.rt, this.state.imm, this.state.rs));
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
     event.preventDefault();
   }
   render() {
@@ -326,6 +298,9 @@ class I_lui extends React.Component {
   }
   handleSubmit(event) {
     this.props.parentCallback(encode.encoder_I_lui(this.props.operation, this.state.rt, this.state.imm))
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
     event.preventDefault();
   }
   render() {
@@ -364,6 +339,9 @@ class J extends React.Component {
   }
   handleSubmit(event) {
     this.props.parentCallback(encode.encoder_J(this.props.operation, this.state.label));
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
     event.preventDefault();
   }
   render() {
@@ -390,7 +368,7 @@ class Encode extends React.Component {
     this.state = {
       expression: "default",
       operation: "", 
-      result:"666"
+      result:""
     };
     this.handleChange = this.handleChange.bind(this);
     this.getResult = this.getResult.bind(this);
@@ -420,8 +398,6 @@ class Encode extends React.Component {
       ui = <R_jr operation = {operation} parentCallback = {this.getResult}/>
     } else if(expression === "I_common") {
       ui = <I_common operation = {operation} parentCallback = {this.getResult}/>
-    } else if(expression === "I_bitwise") {
-      ui = <I_bitwise operation = {operation} parentCallback = {this.getResult}/>
     } else if(expression === "I_branch") {
       ui = <I_branch operation = {operation} parentCallback = {this.getResult}/>
     } else if(expression === "I_ls") {
@@ -458,11 +434,11 @@ class Encode extends React.Component {
 
               <option value="I_common">addi</option>
               <option value="I_common">addiu</option>
-              <option value="I_bitwise">andi</option>
-              <option value="I_bitwise">ori</option>
+              <option value="I_common">andi</option>
+              <option value="I_common">ori</option>
               <option value="I_common">slti</option>
               <option value="I_common">sltiu</option>
-              <option value="I_bitwise">xori</option>
+              <option value="I_common">xori</option>
               <option value="I_branch">beq</option>
               <option value="I_branch">bne</option>
               <option value="I_ls">lb</option>

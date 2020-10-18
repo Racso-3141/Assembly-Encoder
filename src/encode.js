@@ -65,17 +65,6 @@ export function encoder_I_common(operation, rt_, rs_, imm_) {
     return opcode + rs  + rt + imm;
 }
 
-export function encoder_I_bitwise(operation, rt_, rs_, hex_) {
-    const opcode = op_dict[operation];
-    let rs = (rs_ >>> 0).toString(2);
-    rs = "0".repeat(5 - rs.length) + rs;
-    let rt = (rt_ >>> 0).toString(2);
-    rt = "0".repeat(5 - rt.length) + rt;
-    let hex = hexToBinary(hex_);
-    hex = "0".repeat(16 - hex.length) + hex;
-    return opcode + rs  + rt + hex;
-}
-
 export function encoder_I_branch(operation, rs_, rt_, label_) {
     const opcode = op_dict[operation];
     let rs = (rs_ >>> 0).toString(2);
