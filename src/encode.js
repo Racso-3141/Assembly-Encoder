@@ -99,7 +99,7 @@ export function encoder_I_lui(operation, rt_, imm_) {
 
 export function encoder_J(operation, addr_) {
     const opcode = op_dict[operation];
-    let addr = hexToBinary(addr_);
+    let addr = (addr_ >>> 0).toString(2);
     addr = "0".repeat(32 - addr.length) + addr;
     addr = addr.slice(4, 30);
     return opcode + addr;
