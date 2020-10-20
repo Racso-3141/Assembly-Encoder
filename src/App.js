@@ -69,47 +69,6 @@ class App extends React.Component {
     }
     return (
       <div>
-        {/* <form>
-          <label>
-            <select onChange={this.handleChange}>
-              <option disabled={true} value="">select an function</option>
-              <option value="R_common">add</option>
-              <option value="R_common">addu</option>
-              <option value="R_common">and</option>
-              <option value="R_common">or</option>
-              <option value="R_common">nor</option>
-              <option value="R_common">slt</option>
-              <option value="R_common">sltu</option>
-              <option value="R_common">sub</option>
-              <option value="R_common">subu</option>
-              <option value="R_common">div</option>
-              <option value="R_common">divu</option>
-              <option value="R_common">mult</option>
-              <option value="R_common">multu</option>
-              <option value="R_common">xor</option>
-              <option value="R_shift">sll</option>
-              <option value="R_shift">srl</option>
-              <option value="R_jr">jr</option>
-              <option value="I_common">addi</option>
-              <option value="I_common">addiu</option>
-              <option value="I_common">andi</option>
-              <option value="I_common">ori</option>
-              <option value="I_common">slti</option>
-              <option value="I_common">sltiu</option>
-              <option value="I_common">xori</option>
-              <option value="I_branch">beq</option>
-              <option value="I_branch">bne</option>
-              <option value="I_ls">lb</option>
-              <option value="I_ls">lbu</option>
-              <option value="I_ls">lw</option>
-              <option value="I_ls">sb</option>
-              <option value="I_ls">sw</option>
-              <option value="I_lui">lui</option>
-              <option value="J">j</option>
-              <option value="J">jal</option>
-            </select>
-          </label>
-        </form> */}
         <Dropdown onSelect = {this.handleSelect}>
           <Dropdown.Toggle variant="info" id="dropdown-basic">
             Select
