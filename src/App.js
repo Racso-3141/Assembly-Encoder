@@ -12,22 +12,33 @@ import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/Dropdown';
 
+const dict = {
+  'add': "R_common", 'addu': "R_common", 'and': "R_common", 'or': "R_common", 'nor': "R_common", 
+  'nor': "R_common", 'slt': "R_common", 'sltu': "R_common", 'sub': "R_common", 'subu': "R_common", 
+  'div': "R_common", 'divu': "R_common", 'mult': "R_common", 'multu': "R_common", 
+  'xor': "R_common", 'sll': "R_shift", 'srl': "R_shift", 'jr': "R_jr", 
+  'addi': "I_common", 'addiu': "I_common", 'andi': "I_common", 'ori': "I_common", 
+  'slti': "I_common", 'sltiu': "I_common", 'xori': "I_common", 'beq':'I_branch', 'bne':'I_branch',
+  'lb':'I_ls', 'lbu':'I_ls', 'lw':'I_ls', 'sb':'I_ls', 'sw':'I_ls', 'lui':'I_lui',
+  'j':'J', 'jal':'J'
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       expression: "",
-      operation: "", 
+      operation: "666", 
       result:"",
       copied: false
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
     this.getResult = this.getResult.bind(this);
   }
-  handleChange(event) {
+  handleSelect(ek, e) {
     this.setState({
-      expression: event.value,
-      operation: event.nativeEvent.[event.nativeEvent.selectedIndex].text
+      operation: ek,
+      expression: dict[ek]
     });
   }
   getResult(childData) {
@@ -58,7 +69,7 @@ class App extends React.Component {
     }
     return (
       <div>
-        <form>
+        {/* <form>
           <label>
             <select onChange={this.handleChange}>
               <option disabled={true} value="">select an function</option>
@@ -98,46 +109,46 @@ class App extends React.Component {
               <option value="J">jal</option>
             </select>
           </label>
-        </form>
-        <Dropdown onSelect = {this.handleChange}>
+        </form> */}
+        <Dropdown onSelect = {this.handleSelect}>
           <Dropdown.Toggle variant="info" id="dropdown-basic">
-            Select a function
+            Select
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item href="#/add" value = "R_common">add</Dropdown.Item>
-            <Dropdown.Item href="#/addu" value = "R_common">addu</Dropdown.Item>
-            <Dropdown.Item href="#/and" value = "R_common">and</Dropdown.Item>
-            <Dropdown.Item href="#/or" value = "R_common">or</Dropdown.Item>
-            <Dropdown.Item href="#/nor" value = "R_common">nor</Dropdown.Item>
-            <Dropdown.Item href="#/slt" value = "R_common">slt</Dropdown.Item>
-            <Dropdown.Item href="#/sltu" value = "R_common">sltu</Dropdown.Item>
-            <Dropdown.Item href="#/sub" value = "R_common">sub</Dropdown.Item>
-            <Dropdown.Item href="#/subu" value = "R_common">subu</Dropdown.Item>
-            <Dropdown.Item href="#/div" value = "R_common">div</Dropdown.Item>
-            <Dropdown.Item href="#/divu" value = "R_common">divu</Dropdown.Item>
-            <Dropdown.Item href="#/mult" value = "R_common">mult</Dropdown.Item>
-            <Dropdown.Item href="#/multu" value = "R_common">multu</Dropdown.Item>
-            <Dropdown.Item href="#/xor" value = "R_common">xor</Dropdown.Item>
-            <Dropdown.Item href="#/sll" value="R_shift">sll</Dropdown.Item>
-            <Dropdown.Item href="#/srl" value="R_shift">srl</Dropdown.Item>
-            <Dropdown.Item href="#/jr" value="R_jr">jr</Dropdown.Item>
-            <Dropdown.Item href="#/addi" value="I_common">addi</Dropdown.Item>
-            <Dropdown.Item href="#/addiu" value="I_common">addiu</Dropdown.Item>
-            <Dropdown.Item href="#/andi" value="I_common">andi</Dropdown.Item>
-            <Dropdown.Item href="#/ori" value="I_common">ori</Dropdown.Item>
-            <Dropdown.Item href="#/slti" value="I_common">slti</Dropdown.Item>
-            <Dropdown.Item href="#/sltiu" value="I_common">sltiu</Dropdown.Item>
-            <Dropdown.Item href="#/xori" value="I_common">xori</Dropdown.Item>
-            <Dropdown.Item href="#/beq" value="I_branch">beq</Dropdown.Item>
-            <Dropdown.Item href="#/bne" value="I_branch">bne</Dropdown.Item>
-            <Dropdown.Item href="#/lb" value="I_ls">lb</Dropdown.Item>
-            <Dropdown.Item href="#/lbu" value="I_ls">lbu</Dropdown.Item>
-            <Dropdown.Item href="#/lw" value="I_ls">lw</Dropdown.Item>
-            <Dropdown.Item href="#/sb" value="I_ls">sb</Dropdown.Item>
-            <Dropdown.Item href="#/sw" value="I_ls">sw</Dropdown.Item>
-            <Dropdown.Item href="#/lui" value="I_lui">lui</Dropdown.Item>
-            <Dropdown.Item href="#/j" value="J">j</Dropdown.Item>
-            <Dropdown.Item href="#/jal" value="J">jal</Dropdown.Item>
+            <Dropdown.Item href="#/add" eventKey = "add">add</Dropdown.Item>
+            <Dropdown.Item href="#/addu" eventKey = "addu">addu</Dropdown.Item>
+            <Dropdown.Item href="#/and" eventKey = "and">and</Dropdown.Item>
+            <Dropdown.Item href="#/or" eventKey = "or">or</Dropdown.Item>
+            <Dropdown.Item href="#/nor" eventKey = "nor">nor</Dropdown.Item>
+            <Dropdown.Item href="#/slt" eventKey = "slt">slt</Dropdown.Item>
+            <Dropdown.Item href="#/sltu" eventKey = "sltu">sltu</Dropdown.Item>
+            <Dropdown.Item href="#/sub" eventKey = "sub">sub</Dropdown.Item>
+            <Dropdown.Item href="#/subu" eventKey = "subu">subu</Dropdown.Item>
+            <Dropdown.Item href="#/div" eventKey = "div">div</Dropdown.Item>
+            <Dropdown.Item href="#/divu" eventKey = "divu">divu</Dropdown.Item>
+            <Dropdown.Item href="#/mult" eventKey = "mult">mult</Dropdown.Item>
+            <Dropdown.Item href="#/multu" eventKey = "multu">multu</Dropdown.Item>
+            <Dropdown.Item href="#/xor" eventKey = "xor">xor</Dropdown.Item>
+            <Dropdown.Item href="#/sll" eventKey="sll">sll</Dropdown.Item>
+            <Dropdown.Item href="#/srl" eventKey="srl">srl</Dropdown.Item>
+            <Dropdown.Item href="#/jr" eventKey="jr">jr</Dropdown.Item>
+            <Dropdown.Item href="#/addi" eventKey="addi">addi</Dropdown.Item>
+            <Dropdown.Item href="#/addiu" eventKey="addiu">addiu</Dropdown.Item>
+            <Dropdown.Item href="#/andi" eventKey="andi">andi</Dropdown.Item>
+            <Dropdown.Item href="#/ori" eventKey="ori">ori</Dropdown.Item>
+            <Dropdown.Item href="#/slti" eventKey="slti">slti</Dropdown.Item>
+            <Dropdown.Item href="#/sltiu" eventKey="sltiu">sltiu</Dropdown.Item>
+            <Dropdown.Item href="#/xori" eventKey="xori">xori</Dropdown.Item>
+            <Dropdown.Item href="#/beq" eventKey="beq">beq</Dropdown.Item>
+            <Dropdown.Item href="#/bne" eventKey="bne">bne</Dropdown.Item>
+            <Dropdown.Item href="#/lb" eventKey="lb">lb</Dropdown.Item>
+            <Dropdown.Item href="#/lbu" eventKey="lbu">lbu</Dropdown.Item>
+            <Dropdown.Item href="#/lw" eventKey="lw">lw</Dropdown.Item>
+            <Dropdown.Item href="#/sb" eventKey="sb">sb</Dropdown.Item>
+            <Dropdown.Item href="#/sw" eventKey="sw">sw</Dropdown.Item>
+            <Dropdown.Item href="#/lui" eventKey="lui">lui</Dropdown.Item>
+            <Dropdown.Item href="#/j" eventKey="j">j</Dropdown.Item>
+            <Dropdown.Item href="#/jal" eventKey="jal">jal</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
         {ui}
