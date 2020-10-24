@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import Tippy from '@tippy.js/react';
+// import Tippy from '@tippy.js/react';
 import 'tippy.js/dist/tippy.css';
 import * as encode from './encode.js';
 import Button from 'react-bootstrap/Button';
@@ -44,10 +44,8 @@ export class R_common extends React.Component {
         <div>
           <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
             <Form.Row>
-                <Form.Group as={Col} md="4" controlId="validationCustom01">
-                    <InputGroup.Prepend>
-                        <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-                    </InputGroup.Prepend>
+                <Form.Group as={Col} controlId="validationCustom01">
+                <InputGroup>
                     <Form.Control
                     name = "rd"
                     type="text"
@@ -57,26 +55,23 @@ export class R_common extends React.Component {
                     required
                     />
                     <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
+                </InputGroup>
                 </Form.Group>
-                <Form.Group as={Col} md="4" controlId="validationCustom02">
-                    <InputGroup.Prepend>
-                        <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control
-                    name = "rs"
-                    type="text"
-                    placeholder="rs"
-                    aria-describedby="inputGroupPrepend"
-                    onChange = {this.handleChange}
-                    required
-                    />
-                    <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+                <Form.Group as={Col} controlId="validationCustom02">
                     <InputGroup>
-                        <InputGroup.Prepend>
-                            <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-                        </InputGroup.Prepend>
+                        <Form.Control
+                        name = "rs"
+                        type="text"
+                        placeholder="rs"
+                        aria-describedby="inputGroupPrepend"
+                        onChange = {this.handleChange}
+                        required
+                        />
+                        <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
+                    </InputGroup>
+                </Form.Group>
+                <Form.Group as={Col} controlId="validationCustomUsername">
+                    <InputGroup>
                         <Form.Control
                             name = "rt"
                             type="text"
@@ -88,8 +83,6 @@ export class R_common extends React.Component {
                         <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
                     </InputGroup>
                 </Form.Group>
-            </Form.Row>
-            <Form.Row>
             </Form.Row>
             <Button type="submit">Encode</Button>
       </Form>
@@ -583,19 +576,22 @@ constructor(props) {
 }
 handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
+    if(this.state.label === "hello") {
+        this.setState({validated:false});
+    }
 }
 handleSubmit(event) {
     this.props.parentCallback(encode.encoder_J(this.props.operation, this.state.label));
     const form = event.currentTarget;
-    if (form.checkValidity() === false) {
+    //if (form.checkValidity() === false) {
         event.preventDefault();
         event.stopPropagation();
-    }
+    //}
     this.setState({validated:true});
-    Array.from(document.querySelectorAll("input")).forEach(
-    input => (input.value = "")
-    );
-    event.preventDefault();
+    // Array.from(document.querySelectorAll("input")).forEach(
+    // input => (input.value = "")
+    // );
+    //event.preventDefault();
 }
 render() {
     return (
@@ -606,13 +602,13 @@ render() {
                     <InputGroup>
                         <Form.Control
                             name = "label"
-                            type="text"
+                            type="string"
                             placeholder="label"
                             aria-describedby="inputGroupPrepend"
                             onChange = {this.handleChange}
                             required
                         />
-                        <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
+                        <Form.Control.Feedback type="invalid">Please Enter an hexadicimal number</Form.Control.Feedback>
                     </InputGroup>
                 </Form.Group>
             </Form.Row>
