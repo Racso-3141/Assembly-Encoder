@@ -54,13 +54,15 @@ export function encode_R_jr(operation, rs_) {
     return opcode + rs  + rt  + rd + shamt + funct;
 }
 
-export function encoder_I_common(operation, rt_, rs_, imm_) {
+export function encoder_I_common(operation, rt_, rs_, imm_, hex_) {
     const opcode = op_dict[operation];
     let rs = (rs_ >>> 0).toString(2);
     rs = "0".repeat(5 - rs.length) + rs;
     let rt = (rt_ >>> 0).toString(2);
     rt = "0".repeat(5 - rt.length) + rt;
-    let imm = (imm_ >>> 0).toString(2);
+    let imm
+    if(hex_) imm_ = "0x" + imm_
+    imm = (imm_ >>> 0).toString(2);
     imm = (imm_ < 0) ? (imm.slice(-16)): ("0".repeat(16 - imm.length) + imm);
     return opcode + rs  + rt + imm;
 }

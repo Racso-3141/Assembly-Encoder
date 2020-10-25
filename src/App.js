@@ -10,7 +10,7 @@ import './../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/Dropdown';
-import OverlayTrigger from 'react-overlay-trigger'
+import OverlayTrigger from 'react-overlay-trigger';
 
 const dict = {
   'add': "R_common", 'addu': "R_common", 'and': "R_common", 'or': "R_common", 'nor': "R_common", 
@@ -69,9 +69,8 @@ class App extends React.Component {
         <div className="flex-row row-between">
         {this.state.result ? <p className="copy-text">{this.state.result}</p>: null}
             <CopyToClipboard text={this.state.result}
-              onCopy={() => this.setState({copied: true})}
-              tooltip = "Copied">
-              <Button variant="secondary" title = "Copied!">Copy</Button>
+              onCopy={() => this.setState({copied: true})}>
+              <Button>Copy</Button>
             </CopyToClipboard>
         </div>
       )
