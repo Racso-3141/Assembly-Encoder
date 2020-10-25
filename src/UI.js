@@ -18,7 +18,6 @@ export class R_common extends React.Component {
         rs: "",
         rt: "",
         rd: "",
-        validated: false
       };
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,12 +28,12 @@ export class R_common extends React.Component {
     handleSubmit(event) {
       this.props.parentCallback(encode.encode_R_common(this.props.operation, this.state.rs, this.state.rt, this.state.rd), 
       (this.props.operation + "  $" + this.state.rd + ",  $" + this.state.rs + ",  $" + this.state.rt));
-      const form = event.currentTarget;
-      if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      this.setState({validated:true});
+    //   const form = event.currentTarget;
+    //   if (form.checkValidity() === false) {
+    //     event.preventDefault();
+    //     event.stopPropagation();
+    //   }
+    //   this.setState({validated:true});
       Array.from(document.querySelectorAll("input")).forEach(
         input => (input.value = "")
       );
@@ -42,55 +41,100 @@ export class R_common extends React.Component {
     }
     render() {
       return (
-        <div class="form-inline">
-          <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
-            <Form.Row>
-                <Form.Group as={Col} controlId="validationCustom01">
-                    <InputGroup.Prepend>
-                        <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control
-                    name = "rd"
-                    type="text"
-                    placeholder="rd"
-                    aria-describedby="inputGroupPrepend"
-                    onChange = {this.handleChange}
-                    required
-                    />
-                    <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} controlId="validationCustom02">
-                    <InputGroup.Prepend>
-                        <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-                    </InputGroup.Prepend>
-                        <Form.Control
-                        name = "rs"
-                        type="text"
-                        placeholder="rs"
-                        aria-describedby="inputGroupPrepend"
-                        onChange = {this.handleChange}
-                        required
-                        />
-                        <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} controlId="validationCustomUsername">
-                    <InputGroup.Prepend>
-                        <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-                    </InputGroup.Prepend>
-                        <Form.Control
-                            name = "rt"
-                            type="text"
-                            placeholder="rt"
-                            aria-describedby="inputGroupPrepend"
-                            onChange = {this.handleChange}
-                            required
-                        />
-                        <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
-                </Form.Group>
-            </Form.Row>
-            <Button type="submit">Encode</Button>
-      </Form>
-        </div>
+    //     <div class="form-inline">
+    //       <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
+    //         <Form.Row>
+    //             <Form.Group as={Col} controlId="validationCustom01">
+    //                 <InputGroup.Prepend>
+    //                     <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+    //                 </InputGroup.Prepend>
+    //                 <Form.Control
+    //                 name = "rd"
+    //                 type="text"
+    //                 placeholder="rd"
+    //                 aria-describedby="inputGroupPrepend"
+    //                 onChange = {this.handleChange}
+    //                 required
+    //                 />
+    //                 <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
+    //             </Form.Group>
+    //             <Form.Group as={Col} controlId="validationCustom02">
+    //                 <InputGroup.Prepend>
+    //                     <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+    //                 </InputGroup.Prepend>
+    //                     <Form.Control
+    //                     name = "rs"
+    //                     type="text"
+    //                     placeholder="rs"
+    //                     aria-describedby="inputGroupPrepend"
+    //                     onChange = {this.handleChange}
+    //                     required
+    //                     />
+    //                     <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
+    //             </Form.Group>
+    //             <Form.Group as={Col} controlId="validationCustomUsername">
+    //                 <InputGroup.Prepend>
+    //                     <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+    //                 </InputGroup.Prepend>
+    //                     <Form.Control
+    //                         name = "rt"
+    //                         type="text"
+    //                         placeholder="rt"
+    //                         aria-describedby="inputGroupPrepend"
+    //                         onChange = {this.handleChange}
+    //                         required
+    //                     />
+    //                     <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
+    //             </Form.Group>
+    //         </Form.Row>
+    //         <Button type="submit">Encode</Button>
+    //   </Form>
+    //     </div>
+    <form onSubmit={this.handleSubmit}>
+  
+          <div class="form-inline">
+          <InputGroup.Prepend>
+            <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+          </InputGroup.Prepend>
+            <input 
+              type="text" 
+              name="rd" 
+              onChange={this.handleChange}
+              class="form-control" 
+              placeholder="rd" 
+              id="name" />
+  
+          </div>
+  
+          <div class="form-inline">
+          <InputGroup.Prepend>
+            <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+          </InputGroup.Prepend>
+            <input 
+              type="text" 
+              name="rs" 
+              onChange={this.handleChange}
+              class="form-control" 
+              placeholder="rs" 
+              id="email" />
+   
+          </div>
+
+          <div class="form-inline">
+            <InputGroup.Prepend>
+                <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+            </InputGroup.Prepend>
+            <input 
+              type="text" 
+              name="rt" 
+              onChange={this.handleChange}
+              class="form-control" 
+              placeholder="rt" />
+          </div>
+  
+             
+          <Button onClick = {this.handleSubmit}/>
+        </form>
       );
     }
   }
