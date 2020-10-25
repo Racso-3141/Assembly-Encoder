@@ -27,7 +27,8 @@ export class R_common extends React.Component {
       this.setState({[event.target.name]: event.target.value}); 
     }
     handleSubmit(event) {
-      this.props.parentCallback(encode.encode_R_common(this.props.operation, this.state.rs, this.state.rt, this.state.rd));
+      this.props.parentCallback(encode.encode_R_common(this.props.operation, this.state.rs, this.state.rt, this.state.rd), 
+      (this.props.operation + "  $" + this.state.rd + ",  $" + this.state.rs + ",  $" + this.state.rt));
       const form = event.currentTarget;
       if (form.checkValidity() === false) {
         event.preventDefault();
@@ -41,11 +42,13 @@ export class R_common extends React.Component {
     }
     render() {
       return (
-        <div>
+        <div class="form-inline">
           <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
             <Form.Row>
                 <Form.Group as={Col} controlId="validationCustom01">
-                <InputGroup>
+                    <InputGroup.Prepend>
+                        <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+                    </InputGroup.Prepend>
                     <Form.Control
                     name = "rd"
                     type="text"
@@ -55,10 +58,11 @@ export class R_common extends React.Component {
                     required
                     />
                     <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
-                </InputGroup>
                 </Form.Group>
                 <Form.Group as={Col} controlId="validationCustom02">
-                    <InputGroup>
+                    <InputGroup.Prepend>
+                        <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+                    </InputGroup.Prepend>
                         <Form.Control
                         name = "rs"
                         type="text"
@@ -68,10 +72,11 @@ export class R_common extends React.Component {
                         required
                         />
                         <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
-                    </InputGroup>
                 </Form.Group>
                 <Form.Group as={Col} controlId="validationCustomUsername">
-                    <InputGroup>
+                    <InputGroup.Prepend>
+                        <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+                    </InputGroup.Prepend>
                         <Form.Control
                             name = "rt"
                             type="text"
@@ -81,7 +86,6 @@ export class R_common extends React.Component {
                             required
                         />
                         <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
-                    </InputGroup>
                 </Form.Group>
             </Form.Row>
             <Button type="submit">Encode</Button>
@@ -108,7 +112,8 @@ handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
 }
 handleSubmit(event) {
-    this.props.parentCallback(encode.encode_R_shift(this.props.operation, this.state.rd, this.state.rt, this.state.shamt));
+    this.props.parentCallback(encode.encode_R_shift(this.props.operation, this.state.rd, this.state.rt, this.state.shamt), 
+    (this.props.operation + "  $" + this.state.rd + ",  $" + this.state.rt + ",  $" + this.state.shamt));
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
         event.preventDefault();
@@ -122,7 +127,7 @@ handleSubmit(event) {
 }
 render() {
     return (
-    <div>
+    <div class="form-inline">
         <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
             <Form.Row>
                 <Form.Group as={Col} md="4" controlId="validationCustom01">
@@ -154,10 +159,6 @@ render() {
                     <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-                    <InputGroup>
-                        <InputGroup.Prepend>
-                            <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-                        </InputGroup.Prepend>
                         <Form.Control
                             name = "shamt"
                             type="text"
@@ -167,7 +168,6 @@ render() {
                             required
                         />
                         <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
-                    </InputGroup>
                 </Form.Group>
             </Form.Row>
             <Form.Row>
@@ -194,7 +194,8 @@ handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
 }
 handleSubmit(event) {
-    this.props.parentCallback(encode.encode_R_jr(this.props.operation, this.state.rs));
+    this.props.parentCallback(encode.encode_R_jr(this.props.operation, this.state.rs), 
+    (this.props.operation + "  $" + this.state.rs));
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
         event.preventDefault();
@@ -208,26 +209,22 @@ handleSubmit(event) {
 }
 render() {
     return (
-    <div>
+    <div class="form-inline">
         <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
-            <Form.Row>
-                <Form.Group as={Col} md="4" controlId="validationCustom02">
-                    <InputGroup.Prepend>
-                        <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control
-                    name = "rs"
-                    type="text"
-                    placeholder="rs"
-                    aria-describedby="inputGroupPrepend"
-                    onChange = {this.handleChange}
-                    required
-                    />
-                    <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
-                </Form.Group>
-            </Form.Row>
-            <Form.Row>
-            </Form.Row>
+                <InputGroup.Prepend>
+                    <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+                </InputGroup.Prepend>
+                    <InputGroup md = "4">
+                        <Form.Control
+                            name = "rs"
+                            type="text"
+                            placeholder="rs"
+                            aria-describedby="inputGroupPrepend"
+                            onChange = {this.handleChange}
+                            required
+                        />
+                        <Form.Control.Feedback type="invalid">Please Enter an hexadicimal number</Form.Control.Feedback>
+                    </InputGroup>
             <Button type="submit">Encode</Button>
         </Form>
     </div>
@@ -252,7 +249,8 @@ handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
 }
 handleSubmit(event) {
-    this.props.parentCallback(encode.encoder_I_common(this.props.operation, this.state.rt, this.state.rs, this.state.imm));
+    this.props.parentCallback(encode.encoder_I_common(this.props.operation, this.state.rt, this.state.rs, this.state.imm), 
+    (this.props.operation + "  $" + this.state.rt + ",  $" + this.state.rs + ",  $" + this.state.imm));
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
         event.preventDefault();
@@ -266,7 +264,7 @@ handleSubmit(event) {
 }
 render() {
     return (
-    <div>
+    <div class="form-inline">
         <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
             <Form.Row>
                 <Form.Group as={Col} md="4" controlId="validationCustom01">
@@ -337,7 +335,8 @@ handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
 }
 handleSubmit(event) {
-    this.props.parentCallback(encode.encoder_I_branch(this.props.operation, this.state.rs, this.state.rt, this.state.label));
+    this.props.parentCallback(encode.encoder_I_branch(this.props.operation, this.state.rs, this.state.rt, this.state.label), 
+    (this.props.operation + "  $" + this.state.rs + ",  $" + this.state.rt + ",  $" + this.state.label));
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
         event.preventDefault();
@@ -351,7 +350,7 @@ handleSubmit(event) {
 }
 render() {
     return (
-    <div>
+    <div class="form-inline">
         <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
             <Form.Row>
                 <Form.Group as={Col} md="4" controlId="validationCustom01">
@@ -425,7 +424,8 @@ handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
 }
 handleSubmit(event) {
-    this.props.parentCallback(encode.encoder_I_ls(this.props.operation, this.state.rt, this.state.imm, this.state.rs));
+    this.props.parentCallback(encode.encoder_I_ls(this.props.operation, this.state.rt, this.state.imm, this.state.rs), 
+    (this.props.operation + "  $" + this.state.rt + ",  (" + this.state.imm + ")  $" + this.state.rs));
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
         event.preventDefault();
@@ -439,7 +439,7 @@ handleSubmit(event) {
 }
 render() {
     return (
-    <div>
+    <div class="form-inline">
         <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
             <Form.Row>
                 <Form.Group as={Col} md="4" controlId="validationCustom01">
@@ -509,7 +509,8 @@ handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
 }
 handleSubmit(event) {
-    this.props.parentCallback(encode.encoder_I_lui(this.props.operation, this.state.rt, this.state.imm))
+    this.props.parentCallback(encode.encoder_I_lui(this.props.operation, this.state.rt, this.state.imm), 
+    (this.props.operation + "  $" + this.state.rt + ", " + this.state.imm + " "));
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
         event.preventDefault();
@@ -523,7 +524,7 @@ handleSubmit(event) {
 }
 render() {
     return (
-    <div>
+    <div class="form-inline">
         <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
             <Form.Row>
                 <Form.Group as={Col} md="4" controlId="validationCustom02">
@@ -581,7 +582,8 @@ handleChange(event) {
     }
 }
 handleSubmit(event) {
-    this.props.parentCallback(encode.encoder_J(this.props.operation, this.state.label));
+    this.props.parentCallback(encode.encoder_J(this.props.operation, this.state.label), 
+    (this.props.operation + "  $" + this.state.label));
     const form = event.currentTarget;
     //if (form.checkValidity() === false) {
         event.preventDefault();
@@ -595,14 +597,15 @@ handleSubmit(event) {
 }
 render() {
     return (
-    <div>
-        <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
-            <Form.Row>
-                <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-                    <InputGroup>
+    <div class="form-inline">
+                <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
+                <InputGroup.Prepend>
+                    <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+                </InputGroup.Prepend>
+                    <InputGroup md = "4">
                         <Form.Control
                             name = "label"
-                            type="string"
+                            type="text"
                             placeholder="label"
                             aria-describedby="inputGroupPrepend"
                             onChange = {this.handleChange}
@@ -610,10 +613,6 @@ render() {
                         />
                         <Form.Control.Feedback type="invalid">Please Enter an hexadicimal number</Form.Control.Feedback>
                     </InputGroup>
-                </Form.Group>
-            </Form.Row>
-            <Form.Row>
-            </Form.Row>
             <Button type="submit">Encode</Button>
         </Form>
     </div>

@@ -6,12 +6,11 @@ import './../node_modules/tippy.js/dist/tippy.css';
 import './App.css';
 import ReactTooltip from 'react-tooltip';
 import {R_common, R_shift, R_jr, I_common, I_branch, I_ls, I_lui, J} from './UI';
-// import FormExample from './scratch';
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import './../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/Dropdown';
+import OverlayTrigger from 'react-overlay-trigger'
 
 const dict = {
   'add': "R_common", 'addu': "R_common", 'and': "R_common", 'or': "R_common", 'nor': "R_common", 
@@ -20,7 +19,7 @@ const dict = {
   'xor': "R_common", 'sll': "R_shift", 'srl': "R_shift", 'jr': "R_jr", 
   'addi': "I_common", 'addiu': "I_common", 'andi': "I_common", 'ori': "I_common", 
   'slti': "I_common", 'sltiu': "I_common", 'xori': "I_common", 'beq':'I_branch', 'bne':'I_branch',
-  'lb':'I_ls', 'lbu':'I_ls', 'lw':'I_ls', 'sb':'I_ls', 'sw':'I_ls', 'lui':'I_lui',
+  'lb':'I_ls', 'lbu':'I_ls', sh: "I_ls", lh: "I_ls", lhu: "I_ls",'lw':'I_ls', 'sb':'I_ls', 'sw':'I_ls', 'lui':'I_lui',
   'j':'J', 'jal':'J'
 }
 
@@ -31,7 +30,9 @@ class App extends React.Component {
       expression: "",
       operation: "Select", 
       result:"",
-      copied: false
+      copied: false,
+      default: true,
+      instruction: ""
     };
     this.handleSelect = this.handleSelect.bind(this);
     this.getResult = this.getResult.bind(this);
@@ -39,18 +40,42 @@ class App extends React.Component {
   handleSelect(ek, e) {
     this.setState({
       operation: ek,
-      expression: dict[ek]
+      expression: dict[ek],
+      default:false
     });
   }
-  getResult(childData) {
+  getResult(childData, childInstruction) {
     this.setState({
-        result: childData
+        result: childData,
+        instruction: childInstruction
     });
   }
   render() {
     let expression = this.state.expression;
     let operation = this.state.operation;
     let ui;
+    let title;
+    let copy_btn;
+    if(this.state.default) {
+      title = (
+        <div>
+          <h1>Welcome to Assembly Encoder! My friend</h1>
+          <h4>👇 Select an function below to get started</h4>
+        </div>
+      );  
+    }
+    if(this.state.operation != "Select") {
+      copy_btn = (
+        <div className="flex-row row-between">
+        {this.state.result ? <p className="copy-text">{this.state.result}</p>: null}
+            <CopyToClipboard text={this.state.result}
+              onCopy={() => this.setState({copied: true})}
+              tooltip = "Copied">
+              <Button variant="secondary" title = "Copied!">Copy</Button>
+            </CopyToClipboard>
+        </div>
+      )
+    }
     if (expression === "R_common") {
       ui = <R_common operation = {operation} parentCallback = {this.getResult}/>
     } else if(expression === "R_shift") {
@@ -70,9 +95,11 @@ class App extends React.Component {
     }
     return (
       <div className="out-container">
+        {title}
+        <h2 align = "center">{this.state.instruction}</h2>
         <div className="flex-row">
           <Dropdown onSelect = {this.handleSelect}>
-            <Dropdown.Toggle variant="info" id="dropdown-basic">
+            <Dropdown.Toggle variant="primary" id="dropdown-basic">
               <span className="select-title">{operation}</span>
             </Dropdown.Toggle>
             <Dropdown.Menu>
@@ -104,6 +131,9 @@ class App extends React.Component {
               <Dropdown.Item href="#/bne" eventKey="bne">bne</Dropdown.Item>
               <Dropdown.Item href="#/lb" eventKey="lb">lb</Dropdown.Item>
               <Dropdown.Item href="#/lbu" eventKey="lbu">lbu</Dropdown.Item>
+              <Dropdown.Item href="#/lh" eventKey="lh">lh</Dropdown.Item>
+              <Dropdown.Item href="#/lhu" eventKey="lhu">lhu</Dropdown.Item>
+              <Dropdown.Item href="#/sh" eventKey="sh">sh</Dropdown.Item>
               <Dropdown.Item href="#/lw" eventKey="lw">lw</Dropdown.Item>
               <Dropdown.Item href="#/sb" eventKey="sb">sb</Dropdown.Item>
               <Dropdown.Item href="#/sw" eventKey="sw">sw</Dropdown.Item>
@@ -115,16 +145,8 @@ class App extends React.Component {
           {ui}
         </div>
         <hr width="800" align="left"/>
-        <div className="flex-row row-between">
-        {this.state.result ? <p className="copy-text">{this.state.result}</p>: null}
-          <CopyToClipboard text={this.state.result}
-            onCopy={() => this.setState({copied: true})}>
-            <Button variant="secondary">Copy</Button>
-          </CopyToClipboard>
-        </div>
-      </div>
-      
-          
+        {copy_btn}
+      </div>    
     );
   }
 }
