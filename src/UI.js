@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-// import Tippy from '@tippy.js/react';
-import 'tippy.js/dist/tippy.css';
 import * as encode from './encode.js';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -343,22 +341,22 @@ buttonDisabled() {
 handleChange(event) {
     const { name, value } = event.target;
     let errors = this.state.errors;
-    switch (name) {
-        case 'hex':
-          this.setState({hex: value})
-          const imm = document.getElementById('imm').value
-          if(value) {
-            errors["imm"] = 
-            !(isHex(imm)) || imm.length > 6
-            ? 'Please Enter the part of hexadecimal number after 0x(eg. 1f3e)'
-            : '';
-          } else {
-            errors["imm"] = 
-            isNaN(Number(imm)) || imm.length > 2
-            ? 'Please Enter an integer at most 2 digits(eg. 32)'
-            : '';
-          }
-          break;
+    if(name === 'hex') {
+        this.setState({hex: event.target.checked})
+        const imm = document.getElementById('imm').value
+        if(event.target.checked) {
+          errors["imm"] = 
+          !(isHex(imm)) || imm.length > 6
+          ? 'Please Enter the part of hexadecimal number after 0x(eg. 1f3e)'
+          : '';
+        } else {
+          errors["imm"] = 
+          isNaN(Number(imm)) || imm.length > 2
+          ? 'Please Enter an integer at most 2 digits(eg. 32)'
+          : '';
+        }
+    } else{
+      switch (name) {
         case 'rs': 
           if(!value) errors['rs'] = 'Input cannot be empty'
           else{errors["rs"] = 
@@ -394,11 +392,12 @@ handleChange(event) {
           break;
         default:
           break;
+      }
+      this.setState({
+        errors: errors, 
+        [name]: value,
+      })
     }
-        this.setState({
-            errors: errors, 
-            [name]: value,
-        })
 }
 handleSubmit(event) {
     const prepend = (this.state.hex) ?'0x':'$';
@@ -442,7 +441,7 @@ render() {
           <label>For hexadecimal input check(打勾) this 👉👉👉
             </label>
           <div class="form-inline">
-          <input type="checkbox" id = "hexcheck" name="hex" onChange = {this.handleChange} value= {true} />
+          <input type="checkbox" id = "hexcheck" name="hex" onChange = {this.handleChange}/>
           <label for="hex"><strong id = "hexlabel">0x</strong></label>
             <input 
               id = "imm"
@@ -466,11 +465,10 @@ export class I_branch extends React.Component {
 constructor(props) {
     super(props)
     this.state = {
-    expression: "I_branch",
-    rs: "",
-    rt: "",
-    label: "",
-    validated: false
+      expression: "I_branch",
+      rs: "",
+      rt: "",
+      label: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -527,9 +525,6 @@ render() {
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="validationCustomUsername">
                     <InputGroup>
-                        <InputGroup.Prepend>
-                            <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-                        </InputGroup.Prepend>
                         <Form.Control
                             name = "label"
                             type="text"
