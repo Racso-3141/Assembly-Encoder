@@ -65,10 +65,13 @@ export class R_common extends React.Component {
     handleSubmit(event) {
       this.props.parentCallback(encode.encode_R_common(this.props.operation, this.state.rs, this.state.rt, this.state.rd), 
       (this.props.operation + "  $" + this.state.rd + ",  $" + this.state.rs + ",  $" + this.state.rt));
-      Array.from(document.querySelectorAll("input")).forEach(
-        input => (input.value = "")
-      );
       event.preventDefault();
+    }
+    componentWillReceiveProps(nextProps) {
+      if (this.props.operation !== nextProps.operation) {
+        this.setState({errors: {}});
+        Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""));
+      }
     }
     render() {
       return (
@@ -323,8 +326,8 @@ constructor(props) {
     rt: "",
     rs: "",
     imm: "",
-    hex: false,
-    errors: {}
+    errors: {},
+    hex: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -338,46 +341,69 @@ buttonDisabled() {
     if(!rs || !rt || !imm) return true;
 }
 handleChange(event) {
-    this.setState({hex: document.getElementById("hexcheck").checked})
     const { name, value } = event.target;
-        let errors = this.state.errors;
-        switch (name) {
-            case 'rs': 
-            errors["rs"] = 
-                (!value) || !(Number.isInteger(Number(value))) || value.length > 2
-                  ? 'Please Enter an integer with at most 2 digits'
-                  : '';
-              break;
-            case 'rt': 
-            errors["rt"] = 
-                (!value) || !(Number.isInteger(Number(value))) || value.length > 2
-                ? 'Please Enter an integer with at most 2 digits'
-                : '';
-             break;
-            case 'imm': 
-            if(this.state.hex) {
-                errors["imm"] = 
-                (!value) || !(isHex(value)) || value.length > 6
-                ? 'Please Enter the part of hexadecimal number after 0x(eg. 1f3e)'
-                : '';
-            } else {
-                errors["imm"] = 
-                (!value) || !(Number.isInteger(Number(value))) || value.length > 2
-                ? 'Please Enter an integer at most 2 digits(eg. 32)'
-                : '';
+    let errors = this.state.errors;
+    switch (name) {
+        case 'hex':
+          this.setState({hex: value})
+          const imm = document.getElementById('imm').value
+          if(value) {
+            errors["imm"] = 
+            !(isHex(imm)) || imm.length > 6
+            ? 'Please Enter the part of hexadecimal number after 0x(eg. 1f3e)'
+            : '';
+          } else {
+            errors["imm"] = 
+            isNaN(Number(imm)) || imm.length > 2
+            ? 'Please Enter an integer at most 2 digits(eg. 32)'
+            : '';
+          }
+          break;
+        case 'rs': 
+          if(!value) errors['rs'] = 'Input cannot be empty'
+          else{errors["rs"] = 
+          !(Number.isInteger(Number(value))) || value.length > 2
+            ? 'Please Enter an integer with at most 2 digits'
+            : '';}
+          break;
+        case 'rt':
+          if(!value) errors['rt'] = 'Input cannot be empty'   
+          else {errors["rt"] = 
+          !(Number.isInteger(Number(value))) || value.length > 2
+          ? 'Please Enter an integer with at most 2 digits'
+          : '';}
+          break;
+        case 'imm': 
+          if(this.state.hex) {
+            if(!value) errors['imm'] = 'Input cannot be empty'   
+            else {
+              errors["imm"] = 
+              !(isHex(value)) || value.length > 6
+              ? 'Please Enter the part of hexadecimal number after 0x(eg. 1f3e)'
+              : '';
             }
-              break;
-            default:
-              break;
-        }
+          } else {
+            if(!value) errors['imm'] = 'Input cannot be empty'   
+            else {
+              errors["imm"] = 
+              isNaN(Number(value)) || value.length > 2
+              ? 'Please Enter an integer at most 2 digits(eg. 32)'
+              : '';
+            }
+          }
+          break;
+        default:
+          break;
+    }
         this.setState({
             errors: errors, 
             [name]: value,
         })
 }
 handleSubmit(event) {
+    const prepend = (this.state.hex) ?'0x':'$';
     this.props.parentCallback(encode.encoder_I_common(this.props.operation, this.state.rt, this.state.rs, this.state.imm, this.state.hex), 
-    (this.props.operation + "  $" + this.state.rt + ",  $" + this.state.rs + ",  $" + this.state.imm));
+    (this.props.operation + "  $" + this.state.rt + ",  $" + this.state.rs + ",  " + prepend + this.state.imm));
     Array.from(document.querySelectorAll("input")).forEach(
     input => (input.value = "")
     );
@@ -413,11 +439,13 @@ render() {
             <div>{this.state.errors["rs"]}</div>
           </div>
 
-          <label>check this for hexadicimal input</label>
+          <label>For hexadecimal input check(打勾) this 👉👉👉
+            </label>
           <div class="form-inline">
           <input type="checkbox" id = "hexcheck" name="hex" onChange = {this.handleChange} value= {true} />
           <label for="hex"><strong id = "hexlabel">0x</strong></label>
             <input 
+              id = "imm"
               type="text" 
               name="imm" 
               onChange={this.handleChange}

@@ -4,13 +4,14 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import Tippy from '@tippyjs/react';
 import './../node_modules/tippy.js/dist/tippy.css'; 
 import './App.css';
-import ReactTooltip from 'react-tooltip';
 import {R_common, R_shift, R_jr, I_common, I_branch, I_ls, I_lui, J} from './UI';
 import './../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/Dropdown';
 import OverlayTrigger from 'react-overlay-trigger';
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css'; 
 
 const dict = {
   'add': "R_common", 'addu': "R_common", 'and': "R_common", 'or': "R_common", 'nor': "R_common", 
@@ -32,7 +33,8 @@ class App extends React.Component {
       result:"",
       copied: false,
       default: true,
-      instruction: ""
+      instruction: "",
+      dif: false
     };
     this.handleSelect = this.handleSelect.bind(this);
     this.getResult = this.getResult.bind(this);
@@ -41,7 +43,10 @@ class App extends React.Component {
     this.setState({
       operation: ek,
       expression: dict[ek],
-      default:false
+      default:false,
+      instruction: '',
+      result: '',
+      dif: true
     });
   }
   getResult(childData, childInstruction) {
@@ -70,10 +75,23 @@ class App extends React.Component {
         {this.state.result ? <p className="copy-text">{this.state.result}</p>: null}
             <CopyToClipboard text={this.state.result}
               onCopy={() => this.setState({copied: true})}>
-              <Button>Copy</Button>
+              <Button id = "copyBtn">Copy</Button>
             </CopyToClipboard>
         </div>
       )
+      tippy('#copyBtn', {
+        placement: 'top', 
+        arrow: true,
+        animation: 'shift-toward',
+        trigger: 'click',
+        content: 'Copied!',
+        hideOnClick: false, // if you want
+        onShow(instance) {
+          setTimeout(() => {
+            instance.hide();
+          }, 200);
+        }
+      });
     }
     if (expression === "R_common") {
       ui = <R_common operation = {operation} parentCallback = {this.getResult}/>
