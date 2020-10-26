@@ -20,40 +20,40 @@ export class R_common extends React.Component {
       };
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
-      this.buttonDisabled = this.buttonDisabled.bind(this);
     }
     buttonDisabled() {
-        const rs = this.state.rs;
-        const rt = this.state.rt;
-        const rd = this.state.rd;
-        for (const [k, v] of Object.entries(this.state.errors))
-            if(v) return true
-        if(!rs || !rt || !rd) return true;
+      const rs = this.state.rs;
+      const rt = this.state.rt;
+      const rd = this.state.rd;
+      for (const [k, v] of Object.entries(this.state.errors)) if(v) return true;
+      if(!rs || !rt || !rd) return true;
     }
     handleChange(event) {
         const { name, value } = event.target;
         let errors = this.state.errors;
         switch (name) {
-            case 'rs': 
-              errors["rs"] = 
-                (!value) || !(Number.isInteger(Number(value))) || value.length > 2
-                  ? 'Please Enter an integer with at most 2 digits'
-                  : '';
-              break;
-            case 'rt': 
-            errors["rt"] = 
-                (!value) || !(Number.isInteger(Number(value))) || value.length > 2
-                ? 'Please Enter an integer with at most 2 digits'
-                : '';
-             break;
-            case 'rd': 
-              errors["rd"] = 
-                (!value) || !(Number.isInteger(Number(value))) || value.length > 2
-                ? 'Please Enter an integer with at most 2 digits'
-                : '';
-              break;
-            default:
-              break;
+          case 'rs': 
+          if(!value) errors['rs'] = 'Input cannot be empty'
+          else{errors["rs"] = 
+          !(Number.isInteger(Number(value))) || value.length > 2
+            ? 'Please Enter an integer with at most 2 digits'
+            : '';}
+          break;
+        case 'rt':
+          if(!value) errors['rt'] = 'Input cannot be empty'   
+          else {errors["rt"] = 
+          !(Number.isInteger(Number(value))) || value.length > 2
+          ? 'Please Enter an integer with at most 2 digits'
+          : '';}
+          break;
+        case 'rd':
+            if(!value) errors['rd'] = 'Input cannot be empty'   
+            else {errors["rd"] = 
+              !(Number.isInteger(Number(value))) || value.length > 2
+              ? 'Please Enter an integer with at most 2 digits'
+              : '';}
+        default:
+          break;
         }
         this.setState({
             errors: errors, 
@@ -117,8 +117,6 @@ export class R_common extends React.Component {
               placeholder="rt" />
             <div>{this.state.errors["rt"]}</div>
           </div>
-  
-             
           <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>
       );
@@ -139,41 +137,44 @@ constructor(props) {
     this.handleSubmit = this.handleSubmit.bind(this);
 }
 handleChange(event) {
-    const { name, value } = event.target;
-        let errors = this.state.errors;
-        switch (name) {
-            case 'rd': 
-              errors["rd"] = 
-                (!value) || !(Number.isInteger(Number(value))) || value.length > 2
-                  ? 'Please Enter an integer with at most 2 digits'
-                  : '';
-              break;
-            case 'rt': 
-            errors["rt"] = 
-                (!value) || !(Number.isInteger(Number(value))) || value.length > 2
-                ? 'Please Enter an integer with at most 2 digits'
-                : '';
-             break;
-            case 'shamt': 
-              errors["shamt"] = 
-                (!value) || !(Number.isInteger(Number(value))) || value.length > 2
-                ? 'Please Enter an integer with at most 2 digits'
-                : '';
-              break;
-            default:
-              break;
+  const { name, value } = event.target;
+  let errors = this.state.errors;
+  switch (name) {
+    case 'shamt': 
+      if(!value) errors['shamt'] = 'Input cannot be empty'   
+      else {
+        if(!(Number.isInteger(Number(value))) && value !== '-') 
+          errors['shamt'] = 'Please Enter an integer(eg. 45)'
+        else{
+          const v = (Number(value) < 0) ? value.slice(1) : value;
+          errors["shamt"] = v.length > 2 ? 'Please Enter an integer at most 2 digits(eg. 32, -21)': '';
         }
-        this.setState({
-            errors: errors, 
-            [name]: value
-        })
-}
+      }
+      break;
+  case 'rt':
+    if(!value) errors['rt'] = 'Input cannot be empty'   
+    else {errors["rt"] = 
+    !(Number.isInteger(Number(value))) || value.length > 2
+    ? 'Please Enter an integer with at most 2 digits'
+    : '';}
+    break;
+  case 'rd':
+      if(!value) errors['rd'] = 'Input cannot be empty'   
+      else {errors["rd"] = 
+        !(Number.isInteger(Number(value))) || value.length > 2
+        ? 'Please Enter an integer with at most 2 digits'
+        : '';}
+  default:
+    break;
+  }
+  this.setState({
+      errors: errors, 
+      [name]: value
+  })}
 handleSubmit(event) {
     this.props.parentCallback(encode.encode_R_shift(this.props.operation, this.state.rd, this.state.rt, this.state.shamt), 
-    (this.props.operation + "  $" + this.state.rd + ",  $" + this.state.rt + ",  $" + this.state.shamt));
-    Array.from(document.querySelectorAll("input")).forEach(
-    input => (input.value = "")
-    );
+    (this.props.operation + "  $" + this.state.rd + ",  $" + this.state.rt + ",  " + this.state.shamt));
+    Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""));
     event.preventDefault();
 }
 buttonDisabled() {
@@ -184,7 +185,12 @@ buttonDisabled() {
         if(v) return true
     if(!rd || !rt || !shamt) return true;
 }
-
+componentWillReceiveProps(nextProps) {
+  if (this.props.operation !== nextProps.operation) {
+    this.setState({errors: {}});
+    Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""));
+  }
+}
 render() {
     return (
     <div class="form-inline">
@@ -221,9 +227,6 @@ render() {
           </div>
 
           <div class="form-inline">
-            <InputGroup.Prepend>
-                <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-            </InputGroup.Prepend>
             <input 
               type="text" 
               name="shamt" 
@@ -232,8 +235,6 @@ render() {
               placeholder="shift" />
             <div>{this.state.errors["shamt"]}</div>
           </div>
-  
-             
           <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>
     </div>
@@ -262,15 +263,11 @@ buttonDisabled() {
 handleChange(event) {
     const { name, value } = event.target;
     let errors = this.state.errors;
-    switch (name) {
-        case 'rs': 
-          errors["rs"] = 
-            (!value) || !(Number.isInteger(Number(value))) || value.length > 2
-              ? 'Please Enter an integer with at most 2 digits'
-              : '';
-          break;
-        default:
-          break;
+    if(!value) errors['rs'] = 'Input cannot be empty'
+    else{errors["rs"] = 
+    !(Number.isInteger(Number(value))) || value.length > 2
+      ? 'Please Enter an integer with at most 2 digits'
+      : '';
     }
     this.setState({
         errors: errors, 
@@ -280,16 +277,14 @@ handleChange(event) {
 handleSubmit(event) {
     this.props.parentCallback(encode.encode_R_jr(this.props.operation, this.state.rs), 
     (this.props.operation + "  $" + this.state.rs));
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
-    this.setState({validated:true});
-    Array.from(document.querySelectorAll("input")).forEach(
-    input => (input.value = "")
-    );
+    Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""));
     event.preventDefault();
+}
+componentWillReceiveProps(nextProps) {
+  if (this.props.operation !== nextProps.operation) {
+    this.setState({errors: {}});
+    Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""));
+  }
 }
 render() {
     return (
@@ -304,9 +299,7 @@ render() {
               name="rs" 
               onChange={this.handleChange}
               class="form-control" 
-              placeholder="rs"
-              data-tip={this.state.errors["rs"]} data-event = {this.state.errors["rs"] != ''}
-              isInvalid={this.state.errors["rs"] !== ''} />
+              placeholder="rs"/>
             <div>{this.state.errors["rs"]}</div>
           </div>             
           <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
@@ -346,14 +339,19 @@ handleChange(event) {
         const imm = document.getElementById('imm').value
         if(event.target.checked) {
           errors["imm"] = 
-          !(isHex(imm)) || imm.length > 6
+          !(isHex(imm)) || imm.length > 4
           ? 'Please Enter the part of hexadecimal number after 0x(eg. 1f3e)'
           : '';
         } else {
-          errors["imm"] = 
-          isNaN(Number(imm)) || imm.length > 2
-          ? 'Please Enter an integer at most 2 digits(eg. 32)'
-          : '';
+            if(!value) errors['imm'] = 'Input cannot be empty'   
+            else {
+              if(!(Number.isInteger(Number(value))) && value !== '-') 
+                errors['imm'] = 'Please Enter an integer(eg. 45, -97)'
+              else{
+                const v = (Number(value) < 0) ? value.slice(1) : value;
+                errors["imm"] = v.length > 2 ? 'Please Enter an integer at most 2 digits(eg. 32, -43)': '';
+              }
+            }
         }
     } else{
       switch (name) {
@@ -383,10 +381,12 @@ handleChange(event) {
           } else {
             if(!value) errors['imm'] = 'Input cannot be empty'   
             else {
-              errors["imm"] = 
-              isNaN(Number(value)) || value.length > 2
-              ? 'Please Enter an integer at most 2 digits(eg. 32)'
-              : '';
+              if(!(Number.isInteger(Number(value))) && value !== '-') 
+                errors['imm'] = 'Please Enter an integer(eg. 45, -76)'
+              else{
+                const v = (Number(value) < 0) ? value.slice(1) : value;
+                errors["imm"] = v.length > 2 ? 'Please Enter an integer at most 2 digits(eg. 32, -43)': '';
+              }
             }
           }
           break;
@@ -407,6 +407,12 @@ handleSubmit(event) {
     input => (input.value = "")
     );
     event.preventDefault();
+}
+componentWillReceiveProps(nextProps) {
+  if (this.props.operation !== nextProps.operation) {
+    this.setState({errors: {}});
+    Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""));
+  }
 }
 render() {
     return (
@@ -469,79 +475,115 @@ constructor(props) {
       rs: "",
       rt: "",
       label: "",
+      errors: {}
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 }
+buttonDisabled() {
+  const rt = this.state.rt;
+  const rs = this.state.rs;
+  const label = this.state.label;
+  for (const [k, v] of Object.entries(this.state.errors))
+      if(v) return true
+  if(!rs || !rt || !label) return true;
+}
 handleChange(event) {
-    this.setState({[event.target.name]: event.target.value});
+  const { name, value } = event.target;
+  let errors = this.state.errors;
+    switch (name) {
+      case 'rs': 
+        if(!value) errors['rs'] = 'Input cannot be empty'
+        else{errors["rs"] = 
+        !(Number.isInteger(Number(value))) || value.length > 2
+          ? 'Please Enter an integer with at most 2 digits'
+          : '';}
+        break;
+      case 'rt':
+        if(!value) errors['rt'] = 'Input cannot be empty'   
+        else {errors["rt"] = 
+        !(Number.isInteger(Number(value))) || value.length > 2
+        ? 'Please Enter an integer with at most 2 digits'
+        : '';}
+        break;
+      case 'label': 
+          if(!value) errors['label'] = 'Input cannot be empty'   
+        else {
+          if(!value) errors['label'] = 'Input cannot be empty'   
+            else {
+              if(!(Number.isInteger(Number(value))) && value !== '-') 
+                errors['label'] = 'Please Enter an integer(eg. 45, -76)'
+              else{
+                const v = (Number(value) < 0) ? value.slice(1) : value;
+                errors["label"] = v.length > 2 ? 'Please Enter an integer at most 2 digits(eg. 32, -43)': '';
+              }
+            }
+        }
+          break;
+      default:
+        break;
+    }
+    this.setState({
+      errors: errors, 
+      [name]: value,
+    })
 }
 handleSubmit(event) {
     this.props.parentCallback(encode.encoder_I_branch(this.props.operation, this.state.rs, this.state.rt, this.state.label), 
-    (this.props.operation + "  $" + this.state.rs + ",  $" + this.state.rt + ",  $" + this.state.label));
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
-    this.setState({validated:true});
+    (this.props.operation + "  $" + this.state.rs + ",  $" + this.state.rt + ",   " + this.state.label));
     Array.from(document.querySelectorAll("input")).forEach(
     input => (input.value = "")
     );
     event.preventDefault();
 }
+componentWillReceiveProps(nextProps) {
+  if (this.props.operation !== nextProps.operation) {
+    this.setState({errors: {}});
+    Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""));
+  }
+}
 render() {
     return (
     <div class="form-inline">
-        <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
-            <Form.Row>
-                <Form.Group as={Col} md="4" controlId="validationCustom01">
-                    <InputGroup.Prepend>
-                        <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control
-                    name = "rs"
-                    type="text"
-                    placeholder="rs"
-                    aria-describedby="inputGroupPrepend"
-                    onChange = {this.handleChange}
-                    required
-                    />
-                    <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="4" controlId="validationCustom02">
-                    <InputGroup.Prepend>
-                        <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control
-                    name = "rt"
-                    type="text"
-                    placeholder="rt"
-                    aria-describedby="inputGroupPrepend"
-                    onChange = {this.handleChange}
-                    required
-                    />
-                    <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-                    <InputGroup>
-                        <Form.Control
-                            name = "label"
-                            type="text"
-                            placeholder="label"
-                            aria-describedby="inputGroupPrepend"
-                            onChange = {this.handleChange}
-                            required
-                        />
-                        <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
-                    </InputGroup>
-                </Form.Group>
-            </Form.Row>
-            <Form.Row>
-            </Form.Row>
-            <Button type="submit">Encode</Button>
-        </Form>
-    </div>
+      <form onSubmit={this.handleSubmit}>
+          <div class="form-inline">
+          <InputGroup.Prepend>
+            <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+          </InputGroup.Prepend>
+            <input 
+              type="text" 
+              name="rs" 
+              onChange={this.handleChange}
+              class="form-control" 
+              placeholder="rs" />
+            <div>{this.state.errors["rs"]}</div>
+          </div>
+      
+          <div class="form-inline">
+          <InputGroup.Prepend>
+            <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+          </InputGroup.Prepend>
+            <input 
+              type="text" 
+              name="rt" 
+              onChange={this.handleChange}
+              class="form-control" 
+              placeholder="rt"  />
+            <div>{this.state.errors["rt"]}</div>
+          </div>
+
+          <div class="form-inline">
+            <input 
+              type="text" 
+              name="label" 
+              onChange={this.handleChange}
+              class="form-control" 
+              placeholder="label" />
+            <div>{this.state.errors["label"]}</div>
+          </div>
+          <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
+        </form>    
+      </div>
     );
 }
 }
@@ -550,84 +592,119 @@ export class I_ls extends React.Component {
 constructor(props) {
     super(props)
     this.state = {
-    expression: "I_ls", 
-    rt: "",
-    imm: "",
-    rs: "",
-    validated:false
+      expression: "I_ls", 
+      rt: "",
+      imm: "",
+      rs: "",
+      errors: {}
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 }
+buttonDisabled() {
+  const rt = this.state.rt;
+  const rs = this.state.rs;
+  const imm = this.state.imm;
+  for (const [k, v] of Object.entries(this.state.errors))
+      if(v) return true
+  if(!rs || !rt || !imm) return true;
+}
 handleChange(event) {
-    this.setState({[event.target.name]: event.target.value});
+  const { name, value } = event.target;
+  let errors = this.state.errors;
+    switch (name) {
+      case 'rs': 
+        if(!value) errors['rs'] = 'Input cannot be empty'
+        else{errors["rs"] = 
+        !(Number.isInteger(Number(value))) || value.length > 2
+          ? 'Please Enter an integer with at most 2 digits'
+          : '';}
+        break;
+      case 'rt':
+        if(!value) errors['rt'] = 'Input cannot be empty'   
+        else {errors["rt"] = 
+        !(Number.isInteger(Number(value))) || value.length > 2
+        ? 'Please Enter an integer with at most 2 digits'
+        : '';}
+        break;
+      case 'imm': 
+        if(!value) errors['imm'] = 'Input cannot be empty'   
+        else {
+          if(!(Number.isInteger(Number(value))) && value !== '-') 
+            errors['imm'] = 'Please Enter an integer(eg. 45, -76)'
+          else{
+            const v = (Number(value) < 0) ? value.slice(1) : value;
+            errors["imm"] = v.length > 2 ? 'Please Enter an integer at most 2 digits(eg. 32, -43)': '';
+          }
+      }
+        break;
+      default:
+        break;
+    }
+    this.setState({
+      errors: errors, 
+      [name]: value,
+    })
 }
 handleSubmit(event) {
     this.props.parentCallback(encode.encoder_I_ls(this.props.operation, this.state.rt, this.state.imm, this.state.rs), 
     (this.props.operation + "  $" + this.state.rt + ",  (" + this.state.imm + ")  $" + this.state.rs));
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
-    this.setState({validated:true});
     Array.from(document.querySelectorAll("input")).forEach(
     input => (input.value = "")
     );
     event.preventDefault();
 }
+componentWillReceiveProps(nextProps) {
+  if (this.props.operation !== nextProps.operation) {
+    this.setState({errors: {}});
+    Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""));
+  }
+}
 render() {
     return (
     <div class="form-inline">
-        <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
-            <Form.Row>
-                <Form.Group as={Col} md="4" controlId="validationCustom01">
-                    <InputGroup.Prepend>
-                        <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control
-                    name = "rt"
-                    type="text"
-                    placeholder="rt"
-                    aria-describedby="inputGroupPrepend"
-                    onChange = {this.handleChange}
-                    required
-                    />
-                    <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="4" controlId="validationCustom02">                    
-                    (<Form.Control
-                    name = "imm"
-                    type="text"
-                    placeholder="immediate"
-                    aria-describedby="inputGroupPrepend"
-                    onChange = {this.handleChange}
-                    required
-                    />)
-                    <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-                    <InputGroup>
-                        <InputGroup.Prepend>
-                            <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-                        </InputGroup.Prepend>
-                        <Form.Control
-                            name = "rs"
-                            type="text"
-                            placeholder="rs"
-                            aria-describedby="inputGroupPrepend"
-                            onChange = {this.handleChange}
-                            required
-                        />
-                        <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
-                    </InputGroup>
-                </Form.Group>
-            </Form.Row>
-            <Form.Row>
-            </Form.Row>
-            <Button type="submit">Encode</Button>
-        </Form>
-    </div>
+        <form onSubmit={this.handleSubmit}>
+          <div class="form-inline">
+            <InputGroup.Prepend>
+              <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+            </InputGroup.Prepend>
+            <input 
+              type="text" 
+              name="rt" 
+              onChange={this.handleChange}
+              class="form-control" 
+              placeholder="rt" />
+            <div>{this.state.errors["rt"]}</div>
+          </div>
+
+          <div class="form-inline">
+            <label for = "imm" id = "leftbracket"><strong>(</strong></label>
+            <input 
+              id = "imm"
+              type="text" 
+              name="imm" 
+              onChange={this.handleChange}
+              class="form-control" 
+              placeholder="imm" />
+            <label for = "imm" id = "rightbracket"><strong>)</strong></label>
+            <div>{this.state.errors["imm"]}</div>
+          </div>
+
+          <div class="form-inline">
+          <InputGroup.Prepend>
+            <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+          </InputGroup.Prepend>
+            <input 
+              type="text" 
+              name="rs" 
+              onChange={this.handleChange}
+              class="form-control" 
+              placeholder="rs"  />
+            <div>{this.state.errors["rs"]}</div>
+          </div>
+          <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
+        </form>    
+      </div>
     );
 }
 }
@@ -636,68 +713,94 @@ export class I_lui extends React.Component {
 constructor(props) {
     super(props)
     this.state = {
-    expression: "I_lui",
-    rt: "",
-    imm: "",
-    validated: false
+      expression: "I_lui",
+      rt: "",
+      imm: "",
+      errors: {}
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 }
+buttonDisabled() {
+  const rt = this.state.rt;
+  const imm = this.state.imm;
+  for (const [k, v] of Object.entries(this.state.errors))
+      if(v) return true
+  if(!rt || !imm) return true;
+}
 handleChange(event) {
-    this.setState({[event.target.name]: event.target.value});
+  const { name, value } = event.target;
+  let errors = this.state.errors;
+    switch (name) {
+      case 'rt':
+        if(!value) errors['rt'] = 'Input cannot be empty'   
+        else {errors["rt"] = 
+        !(Number.isInteger(Number(value))) || value.length > 2
+        ? 'Please Enter an integer with at most 2 digits'
+        : '';}
+        break;
+      case 'imm': 
+        if(!value) errors['imm'] = 'Input cannot be empty'   
+        else {
+          if(!(Number.isInteger(Number(value))) && value !== '-') 
+            errors['imm'] = 'Please Enter an integer(eg. 45, -76)'
+          else{
+            const v = (Number(value) < 0) ? value.slice(1) : value;
+            errors["imm"] = v.length > 2 ? 'Please Enter an integer at most 2 digits(eg. 32, -43)': '';
+          }
+        }
+        break;
+      default:
+        break;
+    }
+    this.setState({
+      errors: errors, 
+      [name]: value,
+    })
 }
 handleSubmit(event) {
     this.props.parentCallback(encode.encoder_I_lui(this.props.operation, this.state.rt, this.state.imm), 
     (this.props.operation + "  $" + this.state.rt + ", " + this.state.imm + " "));
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
-    this.setState({validated:true});
     Array.from(document.querySelectorAll("input")).forEach(
     input => (input.value = "")
     );
     event.preventDefault();
 }
+componentWillReceiveProps(nextProps) {
+  if (this.props.operation !== nextProps.operation) {
+    this.setState({errors: {}});
+    Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""));
+  }
+}
 render() {
     return (
     <div class="form-inline">
-        <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
-            <Form.Row>
-                <Form.Group as={Col} md="4" controlId="validationCustom02">
-                    <InputGroup.Prepend>
-                        <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control
-                    name = "rt"
-                    type="text"
-                    placeholder="rt"
-                    aria-describedby="inputGroupPrepend"
-                    onChange = {this.handleChange}
-                    required
-                    />
-                    <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-                    <InputGroup>
-                        <Form.Control
-                            name = "imm"
-                            type="text"
-                            placeholder="imm"
-                            aria-describedby="inputGroupPrepend"
-                            onChange = {this.handleChange}
-                            required
-                        />
-                        <Form.Control.Feedback type="invalid">Please Enter an integer</Form.Control.Feedback>
-                    </InputGroup>
-                </Form.Group>
-            </Form.Row>
-            <Form.Row>
-            </Form.Row>
-            <Button type="submit">Encode</Button>
-        </Form>
+        <form onSubmit={this.handleSubmit}>
+          <div class="form-inline">
+            <InputGroup.Prepend>
+              <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+            </InputGroup.Prepend>
+            <input 
+              type="text" 
+              name="rt" 
+              onChange={this.handleChange}
+              class="form-control" 
+              placeholder="rt" />
+            <div>{this.state.errors["rt"]}</div>
+          </div>
+
+          <div class="form-inline">
+            <input 
+              id = "imm"
+              type="text" 
+              name="imm" 
+              onChange={this.handleChange}
+              class="form-control" 
+              placeholder="imm" />
+            <div>{this.state.errors["imm"]}</div>
+          </div>
+          <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
+        </form>    
     </div>
     );
 }
@@ -707,53 +810,64 @@ export class J extends React.Component {
 constructor(props) {
     super(props)
     this.state = {
-    expression: "J",
-    label:"",
-    validated:false
+      expression: "J",
+      label:"",
+      errors:{}
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 }
+buttonDisabled() {
+  const rt = this.state.rt;
+  const imm = this.state.imm;
+  for (const [k, v] of Object.entries(this.state.errors)) if(v) return true
+  if(!rt || !imm) return true;
+}
 handleChange(event) {
-    this.setState({[event.target.name]: event.target.value});
-    if(this.state.label === "hello") {
-        this.setState({validated:false});
-    }
+  const { name, value } = event.target;
+  let errors = this.state.errors;
+  if(!value) errors['label'] = 'Input cannot be empty'   
+  else {
+    errors["label"] = 
+    !(isHex(value)) || value.length > 6
+    ? 'Please Enter the part of hexadecimal number after 0x(eg. 1f3e)'
+    : '';
+  }
+    this.setState({
+      errors: errors, 
+      [name]: value,
+    })
 }
 handleSubmit(event) {
-    this.props.parentCallback(encode.encoder_J(this.props.operation, this.state.label), 
-    (this.props.operation + "  $" + this.state.label));
-    const form = event.currentTarget;
-    //if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
-    //}
-    this.setState({validated:true});
-    // Array.from(document.querySelectorAll("input")).forEach(
-    // input => (input.value = "")
-    // );
-    //event.preventDefault();
+  this.props.parentCallback(encode.encoder_J(this.props.operation, this.state.label), 
+  (this.props.operation + "  0x"  + this.state.label));
+  Array.from(document.querySelectorAll("input")).forEach(
+  input => (input.value = "")
+  );
+  event.preventDefault();
+}
+componentWillReceiveProps(nextProps) {
+  if (this.props.operation !== nextProps.operation) {
+    this.setState({errors: {}});
+    Array.from(document.querySelectorAll("input")).forEach(input => (input.value = ""));
+  }
 }
 render() {
     return (
     <div class="form-inline">
-                <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
-                <InputGroup.Prepend>
-                    <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-                </InputGroup.Prepend>
-                    <InputGroup md = "4">
-                        <Form.Control
-                            name = "label"
-                            type="text"
-                            placeholder="label"
-                            aria-describedby="inputGroupPrepend"
-                            onChange = {this.handleChange}
-                            required
-                        />
-                        <Form.Control.Feedback type="invalid">Please Enter an hexadicimal number</Form.Control.Feedback>
-                    </InputGroup>
-            <Button type="submit">Encode</Button>
-        </Form>
+        <form onSubmit={this.handleSubmit}>
+          <div class="form-inline">
+            <label><strong id = "hexlabel">0x</strong></label>
+            <input 
+              type="text" 
+              name="label" 
+              onChange={this.handleChange}
+              class="form-control" 
+              placeholder="label" />
+            <div>{this.state.errors["label"]}</div>
+          </div> 
+          <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
+        </form>
     </div>
     );
 }

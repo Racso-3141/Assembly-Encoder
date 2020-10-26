@@ -61,7 +61,7 @@ export function encoder_I_common(operation, rt_, rs_, imm_, hex_) {
     let rt = (rt_ >>> 0).toString(2);
     rt = "0".repeat(5 - rt.length) + rt;
     let imm
-    if(hex_) imm_ = "0x" + imm_
+    if(hex_) imm_ = "0x" + imm_;
     imm = (imm_ >>> 0).toString(2);
     imm = (imm_ < 0) ? (imm.slice(-16)): ("0".repeat(16 - imm.length) + imm);
     return opcode + rs  + rt + imm;
@@ -101,6 +101,7 @@ export function encoder_I_lui(operation, rt_, imm_) {
 
 export function encoder_J(operation, addr_) {
     const opcode = op_dict[operation];
+    addr_ = "0x" + addr_;
     let addr = (addr_ >>> 0).toString(2);
     addr = "0".repeat(32 - addr.length) + addr;
     addr = addr.slice(4, 30);
