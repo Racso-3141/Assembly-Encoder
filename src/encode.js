@@ -1,5 +1,3 @@
-let hexToBinary = require('hex-to-binary');
-
 //opcode dictionary-I; J. R type always has opcode 000000
 let op_dict = {
     addi: "001000", addiu: "001001", andi: "001100", ori: "001101",  slti: "001010",

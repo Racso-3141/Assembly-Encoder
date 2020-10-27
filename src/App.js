@@ -1,20 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import Tippy from '@tippyjs/react';
 import './../node_modules/tippy.js/dist/tippy.css'; 
 import './App.css';
 import {R_common, R_shift, R_jr, I_common, I_branch, I_ls, I_lui, J} from './UI';
 import './../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/Dropdown';
-import OverlayTrigger from 'react-overlay-trigger';
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; 
 
 const dict = {
-  'add': "R_common", 'addu': "R_common", 'and': "R_common", 'or': "R_common", 'nor': "R_common", 
+  'add': "R_common", 'addu': "R_common", 'and': "R_common", 'or': "R_common", 
   'nor': "R_common", 'slt': "R_common", 'sltu': "R_common", 'sub': "R_common", 'subu': "R_common", 
   'div': "R_common", 'divu': "R_common", 'mult': "R_common", 'multu': "R_common", 
   'xor': "R_common", 'sll': "R_shift", 'srl': "R_shift", 'jr': "R_jr", 
@@ -69,7 +65,7 @@ class App extends React.Component {
         </div>
       );  
     }
-    if(this.state.operation != "Select") {
+    if(this.state.operation !== "Select") {
       copy_btn = (
         <div className="flex-row row-between">
         {this.state.result ? <p className="copy-text">{this.state.result}</p>: null}

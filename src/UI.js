@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import * as encode from './encode.js';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
 import InputGroup from 'react-bootstrap/InputGroup';
-import ReactTooltip from 'react-tooltip';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css'; 
 const isHex = require('is-hex')
 
 export class R_common extends React.Component {
@@ -52,6 +50,7 @@ export class R_common extends React.Component {
               !(Number.isInteger(Number(value))) || value.length > 2
               ? 'Please Enter an integer with at most 2 digits'
               : '';}
+          break;
         default:
           break;
         }
@@ -72,50 +71,51 @@ export class R_common extends React.Component {
       }
     }
     render() {
+      const rd_error = this.state.errors['rd'];
+      const rs_error = this.state.errors['rs'];
+      const rt_error = this.state.errors['rt'];
       return (
     <form onSubmit={this.handleSubmit}>
-          <div class="form-inline">
+          <div className="form-inline">
           <InputGroup.Prepend>
             <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
           </InputGroup.Prepend>
+          <Tippy content = {rd_error} visible={rd_error} interactive = {true} disabled={!rd_error}>
             <input 
               type="text" 
               name="rd" 
               onChange={this.handleChange}
-              class="form-control" 
-              placeholder="rd"
-              data-tip={this.state.errors["rd"]} data-event = {this.state.errors["rd"] != ''}
-              isInvalid={this.state.errors["rd"] !== ''} />
-              <Form.Control.Feedback type="invalid" tooltip>
-                {this.state.errors["rd"]}
-              </Form.Control.Feedback>
-            <div>{this.state.errors["rd"]}</div>
+              className="form-control" 
+              placeholder="rd"/>
+          </Tippy>
           </div>
       
-          <div class="form-inline">
+          <div className="form-inline">
           <InputGroup.Prepend>
             <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
           </InputGroup.Prepend>
+            <Tippy content = {rs_error} visible={rs_error} interactive = {true} disabled={!rs_error}>
             <input 
               type="text" 
               name="rs" 
               onChange={this.handleChange}
-              class="form-control" 
+              className="form-control" 
               placeholder="rs"  />
-            <div>{this.state.errors["rs"]}</div>
+            </Tippy>
           </div>
 
-          <div class="form-inline">
+          <div className="form-inline">
             <InputGroup.Prepend>
                 <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
             </InputGroup.Prepend>
+            <Tippy content = {rt_error} visible={rt_error} interactive = {true} disabled={!rt_error}>
             <input 
               type="text" 
               name="rt" 
               onChange={this.handleChange}
-              class="form-control" 
+              className="form-control" 
               placeholder="rt" />
-            <div>{this.state.errors["rt"]}</div>
+            </Tippy>
           </div>
           <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>
@@ -164,6 +164,7 @@ handleChange(event) {
         !(Number.isInteger(Number(value))) || value.length > 2
         ? 'Please Enter an integer with at most 2 digits'
         : '';}
+    break;
   default:
     break;
   }
@@ -192,48 +193,51 @@ componentWillReceiveProps(nextProps) {
   }
 }
 render() {
+    const rd_error = this.state.errors['rd'];
+    const rt_error = this.state.errors['rt'];
+    const shamt_error = this.state.errors['shamt'];
     return (
-    <div class="form-inline">
+    <div className="form-inline">
        <form onSubmit={this.handleSubmit}>
-          <div class="form-inline">
+          <div className="form-inline">
           <InputGroup.Prepend>
             <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
           </InputGroup.Prepend>
+          <Tippy content = {rd_error} visible={rd_error} interactive = {true} disabled={!rd_error}>
             <input 
               type="text" 
               name="rd" 
               onChange={this.handleChange}
-              class="form-control" 
+              className="form-control" 
               placeholder="rd"
-              data-tip={this.state.errors["rd"]} data-event = {this.state.errors["rd"] != ''}
+              data-tip={this.state.errors["rd"]} data-event = {this.state.errors["rd"] !== ''}
               isInvalid={this.state.errors["rd"] !== ''} />
-              <Form.Control.Feedback type="invalid" tooltip>
-                {this.state.errors["rd"]}
-              </Form.Control.Feedback>
-            <div>{this.state.errors["rd"]}</div>
+          </Tippy>
           </div>
       
-          <div class="form-inline">
+          <div className="form-inline">
           <InputGroup.Prepend>
             <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
           </InputGroup.Prepend>
+          <Tippy content = {rt_error} visible={rt_error} interactive = {true} disabled={!rt_error}>
             <input 
               type="text" 
               name="rt" 
               onChange={this.handleChange}
-              class="form-control" 
+              className="form-control" 
               placeholder="rt"  />
-            <div>{this.state.errors["rt"]}</div>
+          </Tippy>
           </div>
 
-          <div class="form-inline">
+          <div className="form-inline">
+          <Tippy content = {shamt_error} visible={shamt_error} interactive = {true} disabled={!shamt_error}>
             <input 
               type="text" 
               name="shamt" 
               onChange={this.handleChange}
-              class="form-control" 
+              className="form-control" 
               placeholder="shift" />
-            <div>{this.state.errors["shamt"]}</div>
+          </Tippy>
           </div>
           <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>
@@ -287,20 +291,22 @@ componentWillReceiveProps(nextProps) {
   }
 }
 render() {
+    const rs_error = this.state.errors['rs'];
     return (
-    <div class="form-inline">
+    <div className="form-inline">
         <form onSubmit={this.handleSubmit}>
-          <div class="form-inline">
+          <div className="form-inline">
           <InputGroup.Prepend>
             <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
           </InputGroup.Prepend>
+          <Tippy content = {rs_error} visible={rs_error} interactive = {true} disabled={!rs_error}>
             <input 
               type="text" 
               name="rs" 
               onChange={this.handleChange}
-              class="form-control" 
+              className="form-control" 
               placeholder="rs"/>
-            <div>{this.state.errors["rs"]}</div>
+          </Tippy>
           </div>             
           <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>
@@ -335,24 +341,21 @@ handleChange(event) {
     const { name, value } = event.target;
     let errors = this.state.errors;
     if(name === 'hex') {
-        this.setState({hex: event.target.checked})
-        const imm = document.getElementById('imm').value
-        if(event.target.checked) {
-          errors["imm"] = 
+      this.setState({hex: event.target.checked})
+      const imm = document.getElementById('imm').value
+      if(event.target.checked) {
+        errors["imm"] = 
           !(isHex(imm)) || imm.length > 4
           ? 'Please Enter the part of hexadecimal number after 0x(eg. 1f3e)'
           : '';
-        } else {
-            if(!value) errors['imm'] = 'Input cannot be empty'   
-            else {
-              if(!(Number.isInteger(Number(value))) && value !== '-') 
-                errors['imm'] = 'Please Enter an integer(eg. 45, -97)'
-              else{
-                const v = (Number(value) < 0) ? value.slice(1) : value;
-                errors["imm"] = v.length > 2 ? 'Please Enter an integer at most 2 digits(eg. 32, -43)': '';
-              }
+      } else {
+            if(!(Number.isInteger(Number(imm))) && imm !== '-') 
+              errors['imm'] = 'Please Enter an integer(eg. 45, -97)'
+            else{
+              const v = (Number(imm) < 0) ? imm.slice(1) : imm;
+              errors["imm"] = v.length > 2 ? 'Please Enter an integer at most 2 digits(eg. 32, -43)': '';
             }
-        }
+      }
     } else{
       switch (name) {
         case 'rs': 
@@ -415,48 +418,54 @@ componentWillReceiveProps(nextProps) {
   }
 }
 render() {
+    const rt_error = this.state.errors['rt'];
+    const rs_error = this.state.errors['rs'];
+    const imm_error = this.state.errors['imm'];
     return (
-    <div class="form-inline">
+    <div className="form-inline">
         <form onSubmit={this.handleSubmit}>
-          <div class="form-inline">
+          <div className="form-inline">
           <InputGroup.Prepend>
             <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
           </InputGroup.Prepend>
+          <Tippy content = {rt_error} visible={rt_error} interactive = {true} disabled={!rt_error}>
             <input 
               type="text" 
               name="rt" 
               onChange={this.handleChange}
-              class="form-control" 
+              className="form-control" 
               placeholder="rt" />
-            <div>{this.state.errors["rt"]}</div>
+          </Tippy>
           </div>
       
-          <div class="form-inline">
+          <div className="form-inline">
           <InputGroup.Prepend>
             <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
           </InputGroup.Prepend>
+          <Tippy content = {rs_error} visible={rs_error} interactive = {true} disabled={!rs_error}>
             <input 
               type="text" 
               name="rs" 
               onChange={this.handleChange}
-              class="form-control" 
+              className="form-control" 
               placeholder="rs"  />
-            <div>{this.state.errors["rs"]}</div>
+          </Tippy>
           </div>
 
           <label>For hexadecimal input check(打勾) this 👉👉👉
             </label>
-          <div class="form-inline">
+          <div className="form-inline">
           <input type="checkbox" id = "hexcheck" name="hex" onChange = {this.handleChange}/>
-          <label for="hex"><strong id = "hexlabel">0x</strong></label>
+          <label><strong id = "hexlabel">0x</strong></label>
+          <Tippy content = {imm_error} visible={imm_error} interactive = {true} disabled={!imm_error}>
             <input 
               id = "imm"
               type="text" 
               name="imm" 
               onChange={this.handleChange}
-              class="form-control" 
+              className="form-control" 
               placeholder="imm" />
-            <div>{this.state.errors["imm"]}</div>
+          </Tippy>
           </div>
   
              
@@ -543,43 +552,49 @@ componentWillReceiveProps(nextProps) {
   }
 }
 render() {
+    const rs_error = this.state.errors['rs'];
+    const rt_error = this.state.errors['rt'];
+    const label_error = this.state.errors['label'];
     return (
-    <div class="form-inline">
+    <div className="form-inline">
       <form onSubmit={this.handleSubmit}>
-          <div class="form-inline">
+          <div className="form-inline">
           <InputGroup.Prepend>
             <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
           </InputGroup.Prepend>
+          <Tippy content = {rs_error} visible={rs_error} interactive = {true} disabled={!rs_error}>
             <input 
               type="text" 
               name="rs" 
               onChange={this.handleChange}
-              class="form-control" 
+              className="form-control" 
               placeholder="rs" />
-            <div>{this.state.errors["rs"]}</div>
+          </Tippy>
           </div>
       
-          <div class="form-inline">
+          <div className="form-inline">
           <InputGroup.Prepend>
             <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
           </InputGroup.Prepend>
+          <Tippy content = {rt_error} visible={rt_error} interactive = {true} disabled={!rt_error}>
             <input 
               type="text" 
               name="rt" 
               onChange={this.handleChange}
-              class="form-control" 
+              className="form-control" 
               placeholder="rt"  />
-            <div>{this.state.errors["rt"]}</div>
+          </Tippy>
           </div>
 
-          <div class="form-inline">
+          <div className="form-inline">
+          <Tippy content = {label_error} visible={label_error} interactive = {true} disabled={!label_error}>
             <input 
               type="text" 
               name="label" 
               onChange={this.handleChange}
-              class="form-control" 
+              className="form-control" 
               placeholder="label" />
-            <div>{this.state.errors["label"]}</div>
+          </Tippy>
           </div>
           <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>    
@@ -661,46 +676,52 @@ componentWillReceiveProps(nextProps) {
   }
 }
 render() {
+    const rs_error = this.state.errors['rs'];
+    const rt_error = this.state.errors['rt'];
+    const imm_error = this.state.errors['imm'];
     return (
-    <div class="form-inline">
+    <div className="form-inline">
         <form onSubmit={this.handleSubmit}>
-          <div class="form-inline">
+          <div className="form-inline">
             <InputGroup.Prepend>
               <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
             </InputGroup.Prepend>
+            <Tippy content = {rt_error} visible={rt_error} interactive = {true} disabled={!rt_error}>
             <input 
               type="text" 
               name="rt" 
               onChange={this.handleChange}
-              class="form-control" 
+              className="form-control" 
               placeholder="rt" />
-            <div>{this.state.errors["rt"]}</div>
+            </Tippy>
           </div>
 
-          <div class="form-inline">
+          <div className="form-inline">
             <label for = "imm" id = "leftbracket"><strong>(</strong></label>
+            <Tippy content = {imm_error} visible={imm_error} interactive = {true} disabled={!imm_error}>
             <input 
               id = "imm"
               type="text" 
               name="imm" 
               onChange={this.handleChange}
-              class="form-control" 
+              className="form-control" 
               placeholder="imm" />
+              </Tippy>
             <label for = "imm" id = "rightbracket"><strong>)</strong></label>
-            <div>{this.state.errors["imm"]}</div>
           </div>
 
-          <div class="form-inline">
+          <div className="form-inline">
           <InputGroup.Prepend>
             <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
           </InputGroup.Prepend>
+          <Tippy content = {rs_error} visible={rs_error} interactive = {true} disabled={!rs_error}>
             <input 
               type="text" 
               name="rs" 
               onChange={this.handleChange}
-              class="form-control" 
+              className="form-control" 
               placeholder="rs"  />
-            <div>{this.state.errors["rs"]}</div>
+          </Tippy>
           </div>
           <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>    
@@ -773,31 +794,35 @@ componentWillReceiveProps(nextProps) {
   }
 }
 render() {
+    const rt_error = this.state.errors['rt'];
+    const imm_error = this.state.errors['imm'];
     return (
-    <div class="form-inline">
+    <div className="form-inline">
         <form onSubmit={this.handleSubmit}>
-          <div class="form-inline">
+          <div className="form-inline">
             <InputGroup.Prepend>
               <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
             </InputGroup.Prepend>
+            <Tippy content = {rt_error} visible={rt_error} interactive = {true} disabled={!rt_error}>
             <input 
               type="text" 
               name="rt" 
               onChange={this.handleChange}
-              class="form-control" 
+              className="form-control" 
               placeholder="rt" />
-            <div>{this.state.errors["rt"]}</div>
+            </Tippy>
           </div>
 
-          <div class="form-inline">
+          <div className="form-inline">
+            <Tippy content = {imm_error} visible={imm_error} interactive = {true} disabled={!imm_error}>
             <input 
               id = "imm"
               type="text" 
               name="imm" 
               onChange={this.handleChange}
-              class="form-control" 
+              className="form-control" 
               placeholder="imm" />
-            <div>{this.state.errors["imm"]}</div>
+            </Tippy>
           </div>
           <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>    
@@ -853,18 +878,20 @@ componentWillReceiveProps(nextProps) {
   }
 }
 render() {
+    const label_error = this.state.errors['label'];
     return (
-    <div class="form-inline">
+    <div className="form-inline">
         <form onSubmit={this.handleSubmit}>
-          <div class="form-inline">
+          <div className="form-inline">
             <label><strong id = "hexlabel">0x</strong></label>
+            <Tippy content = {label_error} visible={label_error} interactive = {true} disabled={!label_error}>
             <input 
               type="text" 
               name="label" 
               onChange={this.handleChange}
-              class="form-control" 
+              className="form-control" 
               placeholder="label" />
-            <div>{this.state.errors["label"]}</div>
+            </Tippy>
           </div> 
           <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>
