@@ -853,8 +853,8 @@ handleChange(event) {
   if(!value) errors['label'] = 'Input cannot be empty'   
   else {
     errors["label"] = 
-    !(isHex(value)) || value.length > 6
-    ? 'Please Enter the part of hexadecimal number after 0x with at most 6 digits(eg. 1f3e52)'
+    !(isHex(value)) || value.length > 8
+    ? 'Please Enter the part of hexadecimal number after 0x with at most 8 digits(eg. 1f3e52f0)'
     : '';
   }
     this.setState({
