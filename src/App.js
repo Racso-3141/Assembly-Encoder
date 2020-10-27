@@ -116,43 +116,43 @@ class App extends React.Component {
               <span className="select-title">{operation}</span>
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item href="#/add" eventKey = "add">add</Dropdown.Item>
-              <Dropdown.Item href="#/addu" eventKey = "addu">addu</Dropdown.Item>
-              <Dropdown.Item href="#/and" eventKey = "and">and</Dropdown.Item>
-              <Dropdown.Item href="#/or" eventKey = "or">or</Dropdown.Item>
-              <Dropdown.Item href="#/nor" eventKey = "nor">nor</Dropdown.Item>
-              <Dropdown.Item href="#/slt" eventKey = "slt">slt</Dropdown.Item>
-              <Dropdown.Item href="#/sltu" eventKey = "sltu">sltu</Dropdown.Item>
-              <Dropdown.Item href="#/sub" eventKey = "sub">sub</Dropdown.Item>
-              <Dropdown.Item href="#/subu" eventKey = "subu">subu</Dropdown.Item>
-              <Dropdown.Item href="#/div" eventKey = "div">div</Dropdown.Item>
-              <Dropdown.Item href="#/divu" eventKey = "divu">divu</Dropdown.Item>
-              <Dropdown.Item href="#/mult" eventKey = "mult">mult</Dropdown.Item>
-              <Dropdown.Item href="#/multu" eventKey = "multu">multu</Dropdown.Item>
-              <Dropdown.Item href="#/xor" eventKey = "xor">xor</Dropdown.Item>
-              <Dropdown.Item href="#/sll" eventKey="sll">sll</Dropdown.Item>
-              <Dropdown.Item href="#/srl" eventKey="srl">srl</Dropdown.Item>
-              <Dropdown.Item href="#/jr" eventKey="jr">jr</Dropdown.Item>
-              <Dropdown.Item href="#/addi" eventKey="addi">addi</Dropdown.Item>
-              <Dropdown.Item href="#/addiu" eventKey="addiu">addiu</Dropdown.Item>
-              <Dropdown.Item href="#/andi" eventKey="andi">andi</Dropdown.Item>
-              <Dropdown.Item href="#/ori" eventKey="ori">ori</Dropdown.Item>
-              <Dropdown.Item href="#/slti" eventKey="slti">slti</Dropdown.Item>
-              <Dropdown.Item href="#/sltiu" eventKey="sltiu">sltiu</Dropdown.Item>
-              <Dropdown.Item href="#/xori" eventKey="xori">xori</Dropdown.Item>
-              <Dropdown.Item href="#/beq" eventKey="beq">beq</Dropdown.Item>
-              <Dropdown.Item href="#/bne" eventKey="bne">bne</Dropdown.Item>
-              <Dropdown.Item href="#/lb" eventKey="lb">lb</Dropdown.Item>
-              <Dropdown.Item href="#/lbu" eventKey="lbu">lbu</Dropdown.Item>
-              <Dropdown.Item href="#/lh" eventKey="lh">lh</Dropdown.Item>
-              <Dropdown.Item href="#/lhu" eventKey="lhu">lhu</Dropdown.Item>
-              <Dropdown.Item href="#/sh" eventKey="sh">sh</Dropdown.Item>
-              <Dropdown.Item href="#/lw" eventKey="lw">lw</Dropdown.Item>
-              <Dropdown.Item href="#/sb" eventKey="sb">sb</Dropdown.Item>
-              <Dropdown.Item href="#/sw" eventKey="sw">sw</Dropdown.Item>
-              <Dropdown.Item href="#/lui" eventKey="lui">lui</Dropdown.Item>
-              <Dropdown.Item href="#/j" eventKey="j">j</Dropdown.Item>
-              <Dropdown.Item href="#/jal" eventKey="jal">jal</Dropdown.Item>
+              <Dropdown.Item eventKey = "add">add</Dropdown.Item>
+              <Dropdown.Item eventKey = "addu">addu</Dropdown.Item>
+              <Dropdown.Item eventKey = "and">and</Dropdown.Item>
+              <Dropdown.Item eventKey = "or">or</Dropdown.Item>
+              <Dropdown.Item eventKey = "nor">nor</Dropdown.Item>
+              <Dropdown.Item eventKey = "slt">slt</Dropdown.Item>
+              <Dropdown.Item eventKey = "sltu">sltu</Dropdown.Item>
+              <Dropdown.Item eventKey = "sub">sub</Dropdown.Item>
+              <Dropdown.Item eventKey = "subu">subu</Dropdown.Item>
+              <Dropdown.Item eventKey = "div">div</Dropdown.Item>
+              <Dropdown.Item eventKey = "divu">divu</Dropdown.Item>
+              <Dropdown.Item eventKey = "mult">mult</Dropdown.Item>
+              <Dropdown.Item eventKey = "multu">multu</Dropdown.Item>
+              <Dropdown.Item eventKey = "xor">xor</Dropdown.Item>
+              <Dropdown.Item eventKey="sll">sll</Dropdown.Item>
+              <Dropdown.Item eventKey="srl">srl</Dropdown.Item>
+              <Dropdown.Item eventKey="jr">jr</Dropdown.Item>
+              <Dropdown.Item eventKey="addi">addi</Dropdown.Item>
+              <Dropdown.Item eventKey="addiu">addiu</Dropdown.Item>
+              <Dropdown.Item eventKey="andi">andi</Dropdown.Item>
+              <Dropdown.Item eventKey="ori">ori</Dropdown.Item>
+              <Dropdown.Item eventKey="slti">slti</Dropdown.Item>
+              <Dropdown.Item eventKey="sltiu">sltiu</Dropdown.Item>
+              <Dropdown.Item eventKey="xori">xori</Dropdown.Item>
+              <Dropdown.Item eventKey="beq">beq</Dropdown.Item>
+              <Dropdown.Item eventKey="bne">bne</Dropdown.Item>
+              <Dropdown.Item eventKey="lb">lb</Dropdown.Item>
+              <Dropdown.Item eventKey="lbu">lbu</Dropdown.Item>
+              <Dropdown.Item eventKey="lh">lh</Dropdown.Item>
+              <Dropdown.Item eventKey="lhu">lhu</Dropdown.Item>
+              <Dropdown.Item eventKey="sh">sh</Dropdown.Item>
+              <Dropdown.Item eventKey="lw">lw</Dropdown.Item>
+              <Dropdown.Item eventKey="sb">sb</Dropdown.Item>
+              <Dropdown.Item eventKey="sw">sw</Dropdown.Item>
+              <Dropdown.Item eventKey="lui">lui</Dropdown.Item>
+              <Dropdown.Item eventKey="j">j</Dropdown.Item>
+              <Dropdown.Item eventKey="jal">jal</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
           {ui}
