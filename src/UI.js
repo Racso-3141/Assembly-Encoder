@@ -346,7 +346,7 @@ handleChange(event) {
       if(event.target.checked) {
         errors["imm"] = 
           !(isHex(imm)) || imm.length > 4
-          ? 'Please Enter the part of hexadecimal number after 0x(eg. 1f3e)'
+          ? 'Please Enter the part of hexadecimal number after 0x with at most 4 digits(eg. 1f3e)'
           : '';
       } else {
             if(!(Number.isInteger(Number(imm))) && imm !== '-') 
@@ -843,10 +843,9 @@ constructor(props) {
     this.handleSubmit = this.handleSubmit.bind(this);
 }
 buttonDisabled() {
-  const rt = this.state.rt;
-  const imm = this.state.imm;
+  const label = this.state.label;
   for (const [k, v] of Object.entries(this.state.errors)) if(v) return true
-  if(!rt || !imm) return true;
+  if(!label) return true;
 }
 handleChange(event) {
   const { name, value } = event.target;
@@ -855,7 +854,7 @@ handleChange(event) {
   else {
     errors["label"] = 
     !(isHex(value)) || value.length > 6
-    ? 'Please Enter the part of hexadecimal number after 0x(eg. 1f3e)'
+    ? 'Please Enter the part of hexadecimal number after 0x with at most 6 digits(eg. 1f3e52)'
     : '';
   }
     this.setState({
