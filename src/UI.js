@@ -3,6 +3,7 @@ import * as encode from './encode.js';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Tippy from '@tippyjs/react';
+import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; 
 const isHex = require('is-hex')
 
@@ -34,22 +35,22 @@ export class R_common extends React.Component {
           if(!value) errors['rs'] = 'Input cannot be empty'
           else{errors["rs"] = 
           !(Number.isInteger(Number(value))) || value.length > 2
-            ? 'Please Enter an integer with at most 2 digits'
+            ? 'Input should be a non-negative integer at most 2 digits(eg. 22)'
             : '';}
           break;
         case 'rt':
           if(!value) errors['rt'] = 'Input cannot be empty'   
           else {errors["rt"] = 
           !(Number.isInteger(Number(value))) || value.length > 2
-          ? 'Please Enter an integer with at most 2 digits'
+          ? 'Input should be a non-negative integer at most 2 digits(eg. 22)'
           : '';}
           break;
         case 'rd':
-            if(!value) errors['rd'] = 'Input cannot be empty'   
-            else {errors["rd"] = 
-              !(Number.isInteger(Number(value))) || value.length > 2
-              ? 'Please Enter an integer with at most 2 digits'
-              : '';}
+          if(!value) errors['rd'] = 'Input cannot be empty'   
+          else {errors["rd"] = 
+            !(Number.isInteger(Number(value))) || value.length > 2
+            ? 'Input should be a non-negative integer at most 2 digits(eg. 22)'
+            : '';}
           break;
         default:
           break;
@@ -74,6 +75,19 @@ export class R_common extends React.Component {
       const rd_error = this.state.errors['rd'];
       const rs_error = this.state.errors['rs'];
       const rt_error = this.state.errors['rt'];
+      tippy('button', {
+        placement: 'top', 
+        arrow: true,
+        animation: 'shift-toward',
+        trigger: 'click',
+        content: 'Encoded!',
+        hideOnClick: false, 
+        onShow(instance) {
+          setTimeout(() => {
+            instance.hide();
+          }, 200);
+        }
+      });
       return (
     <form onSubmit={this.handleSubmit}>
           <div className="form-inline">
@@ -144,10 +158,10 @@ handleChange(event) {
       if(!value) errors['shamt'] = 'Input cannot be empty'   
       else {
         if(!(Number.isInteger(Number(value))) && value !== '-') 
-          errors['shamt'] = 'Please Enter an integer(eg. 45)'
+          errors['shamt'] = 'Input should be a integer in [0, 32](eg. 11, 23)'
         else{
           const v = (Number(value) < 0) ? value.slice(1) : value;
-          errors["shamt"] = v.length > 2 ? 'Please Enter an integer at most 2 digits(eg. 32, -21)': '';
+          errors["shamt"] = Number(v) < 0 || Number(v) > 32 ? 'Input should be an integer in [0, 32](eg. 11, 23)': '';
         }
       }
       break;
@@ -155,14 +169,14 @@ handleChange(event) {
     if(!value) errors['rt'] = 'Input cannot be empty'   
     else {errors["rt"] = 
     !(Number.isInteger(Number(value))) || value.length > 2
-    ? 'Please Enter an integer with at most 2 digits'
+    ? 'Input should be a non-negative integer at most 2 digits(eg. 9)'
     : '';}
     break;
   case 'rd':
       if(!value) errors['rd'] = 'Input cannot be empty'   
       else {errors["rd"] = 
         !(Number.isInteger(Number(value))) || value.length > 2
-        ? 'Please Enter an integer with at most 2 digits'
+        ? 'Input should be a non-negative integer at most 2 digits(eg. 11)'
         : '';}
     break;
   default:
@@ -196,6 +210,19 @@ render() {
     const rd_error = this.state.errors['rd'];
     const rt_error = this.state.errors['rt'];
     const shamt_error = this.state.errors['shamt'];
+    tippy('button', {
+      placement: 'top', 
+      arrow: true,
+      animation: 'shift-toward',
+      trigger: 'click',
+      content: 'Encoded!',
+      hideOnClick: false, 
+      onShow(instance) {
+        setTimeout(() => {
+          instance.hide();
+        }, 200);
+      }
+    });
     return (
     <div className="form-inline">
        <form onSubmit={this.handleSubmit}>
@@ -270,7 +297,7 @@ handleChange(event) {
     if(!value) errors['rs'] = 'Input cannot be empty'
     else{errors["rs"] = 
     !(Number.isInteger(Number(value))) || value.length > 2
-      ? 'Please Enter an integer with at most 2 digits'
+      ? 'Input should be a non-negative integer at most 2 digits(eg. 22)'
       : '';
     }
     this.setState({
@@ -292,6 +319,19 @@ componentWillReceiveProps(nextProps) {
 }
 render() {
     const rs_error = this.state.errors['rs'];
+    tippy('button', {
+      placement: 'top', 
+      arrow: true,
+      animation: 'shift-toward',
+      trigger: 'click',
+      content: 'Encoded!',
+      hideOnClick: false, 
+      onShow(instance) {
+        setTimeout(() => {
+          instance.hide();
+        }, 200);
+      }
+    });
     return (
     <div className="form-inline">
         <form onSubmit={this.handleSubmit}>
@@ -338,69 +378,54 @@ buttonDisabled() {
     if(!rs || !rt || !imm) return true;
 }
 handleChange(event) {
-    const { name, value } = event.target;
-    let errors = this.state.errors;
-    if(name === 'hex') {
-      this.setState({hex: event.target.checked})
-      const imm = document.getElementById('imm').value
-      if(event.target.checked) {
-        errors["imm"] = 
-          !(isHex(imm)) || imm.length > 4
-          ? 'Please Enter the part of hexadecimal number after 0x with at most 4 digits(eg. 1f3e)'
-          : '';
-      } else {
-            if(!(Number.isInteger(Number(imm))) && imm !== '-') 
-              errors['imm'] = 'Please Enter an integer(eg. 45, -97)'
-            else{
-              const v = (Number(imm) < 0) ? imm.slice(1) : imm;
-              errors["imm"] = v.length > 2 ? 'Please Enter an integer at most 2 digits(eg. 32, -43)': '';
-            }
-      }
-    } else{
-      switch (name) {
-        case 'rs': 
-          if(!value) errors['rs'] = 'Input cannot be empty'
-          else{errors["rs"] = 
-          !(Number.isInteger(Number(value))) || value.length > 2
-            ? 'Please Enter an integer with at most 2 digits'
-            : '';}
-          break;
-        case 'rt':
-          if(!value) errors['rt'] = 'Input cannot be empty'   
-          else {errors["rt"] = 
-          !(Number.isInteger(Number(value))) || value.length > 2
-          ? 'Please Enter an integer with at most 2 digits'
+  const { name, value } = event.target;
+  let errors = this.state.errors;
+  if(name === 'hex') {
+    this.setState({hex: event.target.checked})
+    const imm = document.getElementById('imm').value
+    if(event.target.checked) {
+      errors["imm"] = 
+        !(isHex(imm)) || imm.length > 4
+        ? 'Input should be the partafter 0x at most 4 digits(eg. 1f3e)'
+        : '';
+    } else
+      errors["imm"] = !Number.isInteger(Number(imm)) && imm !== '-' ? 'Input should be an integer(eg. 32, -43)': ''; 
+  } else{
+    switch (name) {
+      case 'rs': 
+        if(!value) errors['rs'] = 'Input cannot be empty'
+        else{errors["rs"] = 
+        !(Number.isInteger(Number(value))) || value.length > 2
+          ? 'Input should be a non-negative integer at most 2 digits(eg. 22)'
           : '';}
-          break;
-        case 'imm': 
+        break;
+      case 'rt':
+        if(!value) errors['rt'] = 'Input cannot be empty'   
+        else {errors["rt"] = 
+        !(Number.isInteger(Number(value))) || value.length > 2
+        ? 'Input should be a non-negative integer at most 2 digits(eg. 22)'
+        : '';}
+        break;
+      case 'imm': 
+        if(!value) errors['imm'] = 'Input cannot be empty'
+        else {
           if(this.state.hex) {
-            if(!value) errors['imm'] = 'Input cannot be empty'   
-            else {
               errors["imm"] = 
               !(isHex(value)) || value.length > 6
-              ? 'Please Enter the part of hexadecimal number after 0x(eg. 1f3e)'
+              ? 'Input should be the part after 0x at most 4 digits(eg. 1f3e)'
               : '';
-            }
-          } else {
-            if(!value) errors['imm'] = 'Input cannot be empty'   
-            else {
-              if(!(Number.isInteger(Number(value))) && value !== '-') 
-                errors['imm'] = 'Please Enter an integer(eg. 45, -76)'
-              else{
-                const v = (Number(value) < 0) ? value.slice(1) : value;
-                errors["imm"] = v.length > 2 ? 'Please Enter an integer at most 2 digits(eg. 32, -43)': '';
-              }
-            }
-          }
-          break;
-        default:
-          break;
-      }
-      this.setState({
-        errors: errors, 
-        [name]: value,
-      })
+          } 
+          else errors["imm"] = !Number.isInteger(Number(value)) && value !== '-' ? 'Input should be an integer(eg. 32, -43)': '';
+        }
+        break;
+      default:
+        break;
     }
+    this.setState({
+      [name]: value,
+      errors: errors
+    })
+  }
 }
 handleSubmit(event) {
     const prepend = (this.state.hex) ?'0x':'$';
@@ -421,6 +446,19 @@ render() {
     const rt_error = this.state.errors['rt'];
     const rs_error = this.state.errors['rs'];
     const imm_error = this.state.errors['imm'];
+    tippy('button', {
+      placement: 'top', 
+      arrow: true,
+      animation: 'shift-toward',
+      trigger: 'click',
+      content: 'Encoded!',
+      hideOnClick: false, 
+      onShow(instance) {
+        setTimeout(() => {
+          instance.hide();
+        }, 200);
+      }
+    });
     return (
     <div className="form-inline">
         <form onSubmit={this.handleSubmit}>
@@ -505,30 +543,20 @@ handleChange(event) {
         if(!value) errors['rs'] = 'Input cannot be empty'
         else{errors["rs"] = 
         !(Number.isInteger(Number(value))) || value.length > 2
-          ? 'Please Enter an integer with at most 2 digits'
+          ? 'Input should be an interger at most 2 digits(eg. 31, -44)'
           : '';}
         break;
       case 'rt':
         if(!value) errors['rt'] = 'Input cannot be empty'   
         else {errors["rt"] = 
         !(Number.isInteger(Number(value))) || value.length > 2
-        ? 'Please Enter an integer with at most 2 digits'
+        ? 'Input should be an integer at most 2 digits(eg. 31, -44)'
         : '';}
         break;
       case 'label': 
-          if(!value) errors['label'] = 'Input cannot be empty'   
-        else {
-          if(!value) errors['label'] = 'Input cannot be empty'   
-            else {
-              if(!(Number.isInteger(Number(value))) && value !== '-') 
-                errors['label'] = 'Please Enter an integer(eg. 45, -76)'
-              else{
-                const v = (Number(value) < 0) ? value.slice(1) : value;
-                errors["label"] = v.length > 2 ? 'Please Enter an integer at most 2 digits(eg. 32, -43)': '';
-              }
-            }
-        }
-          break;
+        if(!value) errors['label'] = 'Input cannot be empty'   
+        else errors["label"] = !Number.isInteger(Number(value)) && value !== '-' ? 'Input should be an integer(eg. 32, -43)': '';
+        break;
       default:
         break;
     }
@@ -555,6 +583,19 @@ render() {
     const rs_error = this.state.errors['rs'];
     const rt_error = this.state.errors['rt'];
     const label_error = this.state.errors['label'];
+    tippy('button', {
+      placement: 'top', 
+      arrow: true,
+      animation: 'shift-toward',
+      trigger: 'click',
+      content: 'Encoded!',
+      hideOnClick: false, 
+      onShow(instance) {
+        setTimeout(() => {
+          instance.hide();
+        }, 200);
+      }
+    });
     return (
     <div className="form-inline">
       <form onSubmit={this.handleSubmit}>
@@ -632,26 +673,22 @@ handleChange(event) {
         if(!value) errors['rs'] = 'Input cannot be empty'
         else{errors["rs"] = 
         !(Number.isInteger(Number(value))) || value.length > 2
-          ? 'Please Enter an integer with at most 2 digits'
+          ? 'Input should be an integer at most 2 digits(eg. 31, -44)'
           : '';}
         break;
       case 'rt':
         if(!value) errors['rt'] = 'Input cannot be empty'   
         else {errors["rt"] = 
         !(Number.isInteger(Number(value))) || value.length > 2
-        ? 'Please Enter an integer with at most 2 digits'
+        ? 'Input should be an integer at most 2 digits(eg. 31, -44)'
         : '';}
         break;
       case 'imm': 
         if(!value) errors['imm'] = 'Input cannot be empty'   
         else {
-          if(!(Number.isInteger(Number(value))) && value !== '-') 
-            errors['imm'] = 'Please Enter an integer(eg. 45, -76)'
-          else{
-            const v = (Number(value) < 0) ? value.slice(1) : value;
-            errors["imm"] = v.length > 2 ? 'Please Enter an integer at most 2 digits(eg. 32, -43)': '';
-          }
-      }
+          if(!(Number.isInteger(Number(value))) && value !== '-') errors['imm'] = 'Input should be an integer(eg. 45, -76)'
+          else errors["imm"] = !Number.isInteger(Number(value)) && value !== '-' ? 'Input should be an integer(eg. 32, -43)': '';
+        }
         break;
       default:
         break;
@@ -679,6 +716,19 @@ render() {
     const rs_error = this.state.errors['rs'];
     const rt_error = this.state.errors['rt'];
     const imm_error = this.state.errors['imm'];
+    tippy('button', {
+      placement: 'top', 
+      arrow: true,
+      animation: 'shift-toward',
+      trigger: 'click',
+      content: 'Encoded!',
+      hideOnClick: false, 
+      onShow(instance) {
+        setTimeout(() => {
+          instance.hide();
+        }, 200);
+      }
+    });
     return (
     <div className="form-inline">
         <form onSubmit={this.handleSubmit}>
@@ -752,32 +802,45 @@ buttonDisabled() {
 handleChange(event) {
   const { name, value } = event.target;
   let errors = this.state.errors;
+  if(name === 'hex') {
+    this.setState({hex: event.target.checked})
+    const imm = document.getElementById('imm').value
+    if(event.target.checked) {
+      errors["imm"] = 
+        !(isHex(imm)) || imm.length > 4
+        ? 'Input should be the partafter 0x at most 4 digits(eg. 1f3e)'
+        : '';
+    } else
+      errors["imm"] = !Number.isInteger(Number(imm)) && imm !== '-' ? 'Input should be an integer(eg. 32, -43)': ''; 
+  } else{
     switch (name) {
       case 'rt':
         if(!value) errors['rt'] = 'Input cannot be empty'   
         else {errors["rt"] = 
         !(Number.isInteger(Number(value))) || value.length > 2
-        ? 'Please Enter an integer with at most 2 digits'
+        ? 'Input should be a non-negative integer at most 2 digits(eg. 22)'
         : '';}
         break;
       case 'imm': 
-        if(!value) errors['imm'] = 'Input cannot be empty'   
+        if(!value) errors['imm'] = 'Input cannot be empty'
         else {
-          if(!(Number.isInteger(Number(value))) && value !== '-') 
-            errors['imm'] = 'Please Enter an integer(eg. 45, -76)'
-          else{
-            const v = (Number(value) < 0) ? value.slice(1) : value;
-            errors["imm"] = v.length > 2 ? 'Please Enter an integer at most 2 digits(eg. 32, -43)': '';
-          }
+          if(this.state.hex) {
+              errors["imm"] = 
+              !(isHex(value)) || value.length > 6
+              ? 'Input should be the part after 0x at most 4 digits(eg. 1f3e)'
+              : '';
+          } 
+          else errors["imm"] = !Number.isInteger(Number(value)) && value !== '-' ? 'Input should be an integer(eg. 32, -43)': '';
         }
         break;
       default:
         break;
     }
     this.setState({
-      errors: errors, 
       [name]: value,
+      errors: errors
     })
+  }
 }
 handleSubmit(event) {
     this.props.parentCallback(encode.encoder_I_lui(this.props.operation, this.state.rt, this.state.imm), 
@@ -796,6 +859,19 @@ componentWillReceiveProps(nextProps) {
 render() {
     const rt_error = this.state.errors['rt'];
     const imm_error = this.state.errors['imm'];
+    tippy('button', {
+      placement: 'top', 
+      arrow: true,
+      animation: 'shift-toward',
+      trigger: 'click',
+      content: 'Encoded!',
+      hideOnClick: false, 
+      onShow(instance) {
+        setTimeout(() => {
+          instance.hide();
+        }, 200);
+      }
+    });
     return (
     <div className="form-inline">
         <form onSubmit={this.handleSubmit}>
@@ -813,8 +889,12 @@ render() {
             </Tippy>
           </div>
 
+          <label>For hexadecimal input check(打勾) this 👉👉👉
+            </label>
           <div className="form-inline">
-            <Tippy content = {imm_error} visible={imm_error} interactive = {true} disabled={!imm_error}>
+          <input type="checkbox" id = "hexcheck" name="hex" onChange = {this.handleChange}/>
+          <label><strong id = "hexlabel">0x</strong></label>
+          <Tippy content = {imm_error} visible={imm_error} interactive = {true} disabled={!imm_error}>
             <input 
               id = "imm"
               type="text" 
@@ -822,7 +902,7 @@ render() {
               onChange={this.handleChange}
               className="form-control" 
               placeholder="imm" />
-            </Tippy>
+          </Tippy>
           </div>
           <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>    
@@ -854,7 +934,7 @@ handleChange(event) {
   else {
     errors["label"] = 
     !(isHex(value)) || value.length > 8
-    ? 'Please Enter the part of hexadecimal number after 0x with at most 8 digits(eg. 1f3e52f0)'
+    ? 'Input should be the part after 0x at most 8 digits(eg. 1f3e52f0)'
     : '';
   }
     this.setState({
@@ -878,6 +958,19 @@ componentWillReceiveProps(nextProps) {
 }
 render() {
     const label_error = this.state.errors['label'];
+    tippy('button', {
+      placement: 'top', 
+      arrow: true,
+      animation: 'shift-toward',
+      trigger: 'click',
+      content: 'Encoded!',
+      hideOnClick: false, 
+      onShow(instance) {
+        setTimeout(() => {
+          instance.hide();
+        }, 200);
+      }
+    });
     return (
     <div className="form-inline">
         <form onSubmit={this.handleSubmit}>
