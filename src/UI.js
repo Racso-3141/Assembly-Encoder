@@ -75,7 +75,7 @@ export class R_common extends React.Component {
       const rd_error = this.state.errors['rd'];
       const rs_error = this.state.errors['rs'];
       const rt_error = this.state.errors['rt'];
-      tippy('button', {
+      tippy('#btn1', {
         placement: 'top', 
         arrow: true,
         animation: 'shift-toward',
@@ -131,7 +131,7 @@ export class R_common extends React.Component {
               placeholder="rt" />
             </Tippy>
           </div>
-          <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
+          <Button id = 'btn1' onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>
       );
     }
@@ -198,7 +198,7 @@ buttonDisabled() {
     const shamt = this.state.shamt;
     for (const [k, v] of Object.entries(this.state.errors))
         if(v) return true
-    if(!rd || !rt || !shamt) return true;
+    if(!rd || !rt || !shamt || shamt === '-') return true;
 }
 componentWillReceiveProps(nextProps) {
   if (this.props.operation !== nextProps.operation) {
@@ -210,7 +210,7 @@ render() {
     const rd_error = this.state.errors['rd'];
     const rt_error = this.state.errors['rt'];
     const shamt_error = this.state.errors['shamt'];
-    tippy('button', {
+    tippy('#btn2', {
       placement: 'top', 
       arrow: true,
       animation: 'shift-toward',
@@ -266,7 +266,7 @@ render() {
               placeholder="shift" />
           </Tippy>
           </div>
-          <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
+          <Button id = 'btn2' onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>
     </div>
     );
@@ -319,7 +319,7 @@ componentWillReceiveProps(nextProps) {
 }
 render() {
     const rs_error = this.state.errors['rs'];
-    tippy('button', {
+    tippy('#btn3', {
       placement: 'top', 
       arrow: true,
       animation: 'shift-toward',
@@ -348,7 +348,7 @@ render() {
               placeholder="rs"/>
           </Tippy>
           </div>             
-          <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
+          <Button id = 'btn3' onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>
     </div>
     );
@@ -375,7 +375,7 @@ buttonDisabled() {
     const imm = this.state.imm;
     for (const [k, v] of Object.entries(this.state.errors))
         if(v) return true
-    if(!rs || !rt || !imm) return true;
+    if(!rs || !rt || !imm || imm === '-') return true;
 }
 handleChange(event) {
   const { name, value } = event.target;
@@ -446,7 +446,7 @@ render() {
     const rt_error = this.state.errors['rt'];
     const rs_error = this.state.errors['rs'];
     const imm_error = this.state.errors['imm'];
-    tippy('button', {
+    tippy('#btn4', {
       placement: 'top', 
       arrow: true,
       animation: 'shift-toward',
@@ -507,7 +507,7 @@ render() {
           </div>
   
              
-          <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
+          <Button id = 'btn4' onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>
     </div>
     );
@@ -533,7 +533,7 @@ buttonDisabled() {
   const label = this.state.label;
   for (const [k, v] of Object.entries(this.state.errors))
       if(v) return true
-  if(!rs || !rt || !label) return true;
+  if(!rs || !rt || !label || label === '-') return true;
 }
 handleChange(event) {
   const { name, value } = event.target;
@@ -583,7 +583,7 @@ render() {
     const rs_error = this.state.errors['rs'];
     const rt_error = this.state.errors['rt'];
     const label_error = this.state.errors['label'];
-    tippy('button', {
+    tippy('#btn5', {
       placement: 'top', 
       arrow: true,
       animation: 'shift-toward',
@@ -637,7 +637,7 @@ render() {
               placeholder="label" />
           </Tippy>
           </div>
-          <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
+          <Button id = 'btn5' onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>    
       </div>
     );
@@ -663,7 +663,7 @@ buttonDisabled() {
   const imm = this.state.imm;
   for (const [k, v] of Object.entries(this.state.errors))
       if(v) return true
-  if(!rs || !rt || !imm) return true;
+  if(!rs || !rt || !imm || imm === '-') return true;
 }
 handleChange(event) {
   const { name, value } = event.target;
@@ -716,7 +716,7 @@ render() {
     const rs_error = this.state.errors['rs'];
     const rt_error = this.state.errors['rt'];
     const imm_error = this.state.errors['imm'];
-    tippy('button', {
+    tippy('#btn6', {
       placement: 'top', 
       arrow: true,
       animation: 'shift-toward',
@@ -773,7 +773,7 @@ render() {
               placeholder="rs"  />
           </Tippy>
           </div>
-          <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
+          <Button id = 'btn6' onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>    
       </div>
     );
@@ -797,7 +797,7 @@ buttonDisabled() {
   const imm = this.state.imm;
   for (const [k, v] of Object.entries(this.state.errors))
       if(v) return true
-  if(!rt || !imm) return true;
+  if(!rt || !imm || imm === '-') return true;
 }
 handleChange(event) {
   const { name, value } = event.target;
@@ -859,7 +859,7 @@ componentWillReceiveProps(nextProps) {
 render() {
     const rt_error = this.state.errors['rt'];
     const imm_error = this.state.errors['imm'];
-    tippy('button', {
+    tippy('#btn7', {
       placement: 'top', 
       arrow: true,
       animation: 'shift-toward',
@@ -904,7 +904,7 @@ render() {
               placeholder="imm" />
           </Tippy>
           </div>
-          <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
+          <Button id = 'btn7' onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>    
     </div>
     );
@@ -925,7 +925,7 @@ constructor(props) {
 buttonDisabled() {
   const label = this.state.label;
   for (const [k, v] of Object.entries(this.state.errors)) if(v) return true
-  if(!label) return true;
+  if(!label || label === '-') return true;
 }
 handleChange(event) {
   const { name, value } = event.target;
@@ -958,7 +958,7 @@ componentWillReceiveProps(nextProps) {
 }
 render() {
     const label_error = this.state.errors['label'];
-    tippy('button', {
+    tippy('#btn8', {
       placement: 'top', 
       arrow: true,
       animation: 'shift-toward',
@@ -985,7 +985,7 @@ render() {
               placeholder="label" />
             </Tippy>
           </div> 
-          <Button onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
+          <Button id = 'btn8' onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>
     </div>
     );
