@@ -49,7 +49,7 @@ Enxu Han (University of Illinois at Urbana-Champaign)
 ## Tester:
 Kunping Lin (University of Illinois at Urbana-Champaign)
 <br/>
-Kary Wang (University of Illinois at Urbana-Champaign)
+Jiahui Wang (University of Illinois at Urbana-Champaign)
 <br/>
 Sicong He (University of Illinois at Urbana-Champaign)
 <br/>
