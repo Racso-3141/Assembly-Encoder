@@ -61,7 +61,6 @@ class App extends React.Component {
       title = (
         <div>
           <h1 id = 'main'>Welcome to Assembly Encoder! My friend</h1>
-          {/* <p id = 'instruct'>👇 Select an function to get started</p> */}
         </div>
       );  
     }
@@ -156,7 +155,7 @@ class App extends React.Component {
             </Dropdown.Menu>
           </Dropdown>
           {this.state.default && 
-          <p id = 'instruct'>👈 Select a function to get started</p>}
+          <p id = 'instruct'>👈 Select an operation to get started</p>}
           {ui}
         </div>
         <hr width="800" align="left"/>
