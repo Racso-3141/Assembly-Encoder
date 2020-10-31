@@ -787,7 +787,8 @@ constructor(props) {
       expression: "I_lui",
       rt: "",
       imm: "",
-      errors: {}
+      errors: {},
+      hex: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -843,7 +844,7 @@ handleChange(event) {
   }
 }
 handleSubmit(event) {
-    this.props.parentCallback(encode.encoder_I_lui(this.props.operation, this.state.rt, this.state.imm), 
+    this.props.parentCallback(encode.encoder_I_lui(this.props.operation, this.state.rt, this.state.imm, this.state.hex), 
     (this.props.operation + "  $" + this.state.rt + ", " + this.state.imm + " "));
     Array.from(document.querySelectorAll("input")).forEach(
     input => (input.value = "")
