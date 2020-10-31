@@ -58,5 +58,5 @@ Wei Xia (University of Illinois at Urbana-Champaign)
 Tianshi Zhou (Rensselaer polytechnic institute)
 <br/>
 
-## UI and graphical supervisor:
+## UI and visual supervisor:
 Blair Ding (University of the arts London)
