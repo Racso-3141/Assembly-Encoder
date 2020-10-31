@@ -1,7 +1,7 @@
 # Assembly Encoder
 
 ## About the project
-In CS233, we have a hard time transfering MIPS intructions to machine code. Assmebly Encoder helps you to transfer MIPS intructions in seconds!
+In CS233, you may have a hard time transfering MIPS intructions to machine code. Assmebly Encoder helps you to transfer MIPS intructions in seconds!
 
 ## Usage
 <br/>
@@ -17,17 +17,17 @@ You will arrive to the Welcome page.
 <br/>   
 
 ### Select an operation
-Click the 'Select' button to choose your desired operation(Here, lw)
+Click the 'Select' button to choose your desired operation(lw here)
 ![](./demo/operation.png)
 <br/>   
 
 ### Input values
-After select your operation, you will arrive to the page below. Now you can input values. Instructions here is lw $2, 3($1)
+After select your operation, you will arrive to the page below. Now you can input values. Instruction here is lw $2, 3($1)
 ![](./demo/input.png)
 <br/>      
 
 ### Encode
-After input values. click the 'Encode' button to transfer you MIPS instruction to 32-bit function code.
+After input values. Click the 'Encode' button to transfer you MIPS instruction to 32-bit function code.
 ![](./demo/encode.png)
 <br/>   
 
@@ -49,7 +49,7 @@ Enxu Han (University of Illinois at Urbana-Champaign)
 ## Tester:
 Kunping Lin (University of Illinois at Urbana-Champaign)
 <br/>
-Kary Wang (University of Illinois at Urbana-Champaign)
+Jiahui Wang (University of Illinois at Urbana-Champaign)
 <br/>
 Sicong He (University of Illinois at Urbana-Champaign)
 <br/>
@@ -58,5 +58,5 @@ Wei Xia (University of Illinois at Urbana-Champaign)
 Tianshi Zhou (Rensselaer polytechnic institute)
 <br/>
 
-## UI and graphical supervisor:
+## UI and visual supervisor:
 Blair Ding (University of the arts London)
