@@ -177,3 +177,13 @@ h2{
 #rightbracket {
   font-size: 30px;
 }
+#main {
+  font-family: 'Roboto', sans-serif;
+  font-size: 50px;
+  text-align: center;
+  padding-bottom: 30px;
+}
+#instruct {
+  font-family: 'Open Sans', sans-serif;
+  font-size:22px;
+}

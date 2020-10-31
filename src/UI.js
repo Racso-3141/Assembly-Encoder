@@ -34,21 +34,21 @@ export class R_common extends React.Component {
           case 'rs': 
           if(!value) errors['rs'] = 'Input cannot be empty'
           else{errors["rs"] = 
-          !(Number.isInteger(Number(value))) || value.length > 2
+          !Number.isInteger(Number(value)) || Number(value) < 0 || value.length > 2
             ? 'Input should be a non-negative integer at most 2 digits(eg. 22)'
             : '';}
           break;
         case 'rt':
           if(!value) errors['rt'] = 'Input cannot be empty'   
           else {errors["rt"] = 
-          !(Number.isInteger(Number(value))) || value.length > 2
+          !Number.isInteger(Number(value)) || Number(value) < 0 || value.length > 2
           ? 'Input should be a non-negative integer at most 2 digits(eg. 22)'
           : '';}
           break;
         case 'rd':
           if(!value) errors['rd'] = 'Input cannot be empty'   
           else {errors["rd"] = 
-            !(Number.isInteger(Number(value))) || value.length > 2
+          !Number.isInteger(Number(value)) || Number(value) < 0 || value.length > 2
             ? 'Input should be a non-negative integer at most 2 digits(eg. 22)'
             : '';}
           break;
@@ -168,14 +168,14 @@ handleChange(event) {
   case 'rt':
     if(!value) errors['rt'] = 'Input cannot be empty'   
     else {errors["rt"] = 
-    !(Number.isInteger(Number(value))) || value.length > 2
+    !Number.isInteger(Number(value)) || Number(value) < 0 || value.length > 2
     ? 'Input should be a non-negative integer at most 2 digits(eg. 9)'
     : '';}
     break;
   case 'rd':
       if(!value) errors['rd'] = 'Input cannot be empty'   
       else {errors["rd"] = 
-        !(Number.isInteger(Number(value))) || value.length > 2
+      !Number.isInteger(Number(value)) || Number(value) < 0 || value.length > 2
         ? 'Input should be a non-negative integer at most 2 digits(eg. 11)'
         : '';}
     break;
@@ -296,7 +296,7 @@ handleChange(event) {
     let errors = this.state.errors;
     if(!value) errors['rs'] = 'Input cannot be empty'
     else{errors["rs"] = 
-    !(Number.isInteger(Number(value))) || value.length > 2
+    !Number.isInteger(Number(value)) || Number(value) < 0 || value.length > 2
       ? 'Input should be a non-negative integer at most 2 digits(eg. 22)'
       : '';
     }
@@ -395,14 +395,14 @@ handleChange(event) {
       case 'rs': 
         if(!value) errors['rs'] = 'Input cannot be empty'
         else{errors["rs"] = 
-        !(Number.isInteger(Number(value))) || value.length > 2
+        !Number.isInteger(Number(value)) || Number(value) < 0 || value.length > 2
           ? 'Input should be a non-negative integer at most 2 digits(eg. 22)'
           : '';}
         break;
       case 'rt':
         if(!value) errors['rt'] = 'Input cannot be empty'   
         else {errors["rt"] = 
-        !(Number.isInteger(Number(value))) || value.length > 2
+        !Number.isInteger(Number(value)) || Number(value) < 0 || value.length > 2
         ? 'Input should be a non-negative integer at most 2 digits(eg. 22)'
         : '';}
         break;
@@ -542,15 +542,15 @@ handleChange(event) {
       case 'rs': 
         if(!value) errors['rs'] = 'Input cannot be empty'
         else{errors["rs"] = 
-        !(Number.isInteger(Number(value))) || value.length > 2
-          ? 'Input should be an interger at most 2 digits(eg. 31, -44)'
+        !Number.isInteger(Number(value)) || Number(value) < 0 || value.length > 2
+          ? 'Input should be an interger at most 2 digits(eg. 31)'
           : '';}
         break;
       case 'rt':
         if(!value) errors['rt'] = 'Input cannot be empty'   
         else {errors["rt"] = 
-        !(Number.isInteger(Number(value))) || value.length > 2
-        ? 'Input should be an integer at most 2 digits(eg. 31, -44)'
+        !Number.isInteger(Number(value)) || Number(value) < 0 || value.length > 2
+        ? 'Input should be an integer at most 2 digits(eg. 31)'
         : '';}
         break;
       case 'label': 
@@ -672,15 +672,15 @@ handleChange(event) {
       case 'rs': 
         if(!value) errors['rs'] = 'Input cannot be empty'
         else{errors["rs"] = 
-        !(Number.isInteger(Number(value))) || value.length > 2
-          ? 'Input should be an integer at most 2 digits(eg. 31, -44)'
+        !Number.isInteger(Number(value)) || Number(value) < 0 || value.length > 2
+          ? 'Input should be an integer at most 2 digits(eg. 31)'
           : '';}
         break;
       case 'rt':
         if(!value) errors['rt'] = 'Input cannot be empty'   
         else {errors["rt"] = 
-        !(Number.isInteger(Number(value))) || value.length > 2
-        ? 'Input should be an integer at most 2 digits(eg. 31, -44)'
+        !Number.isInteger(Number(value)) || Number(value) < 0 || value.length > 2
+        ? 'Input should be an integer at most 2 digits(eg. 31)'
         : '';}
         break;
       case 'imm': 
@@ -817,7 +817,7 @@ handleChange(event) {
       case 'rt':
         if(!value) errors['rt'] = 'Input cannot be empty'   
         else {errors["rt"] = 
-        !(Number.isInteger(Number(value))) || value.length > 2
+        !Number.isInteger(Number(value)) || Number(value) < 0 || value.length > 2
         ? 'Input should be a non-negative integer at most 2 digits(eg. 22)'
         : '';}
         break;
