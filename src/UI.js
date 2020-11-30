@@ -747,7 +747,6 @@ render() {
           </div>
 
           <div className="form-inline">
-            <label for = "imm" id = "leftbracket"><strong>(</strong></label>
             <Tippy content = {imm_error} visible={imm_error} interactive = {true} disabled={!imm_error}>
             <input 
               id = "imm"
@@ -756,22 +755,24 @@ render() {
               onChange={this.handleChange}
               className="form-control" 
               placeholder="imm" />
-              </Tippy>
-            <label for = "imm" id = "rightbracket"><strong>)</strong></label>
+            </Tippy>
           </div>
 
           <div className="form-inline">
-          <InputGroup.Prepend>
-            <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
-          </InputGroup.Prepend>
-          <Tippy content = {rs_error} visible={rs_error} interactive = {true} disabled={!rs_error}>
-            <input 
-              type="text" 
-              name="rs" 
-              onChange={this.handleChange}
-              className="form-control" 
-              placeholder="rs"  />
-          </Tippy>
+            <label for = "imm" id = "leftbracket"><strong>(</strong></label>
+            <InputGroup.Prepend>
+              <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+            </InputGroup.Prepend>
+            <Tippy content = {rs_error} visible={rs_error} interactive = {true} disabled={!rs_error}>
+              <input 
+                type="text" 
+                name="rs" 
+                onChange={this.handleChange}
+                className="form-control" 
+                id = "ls_rs"
+                placeholder="rs"  />
+            </Tippy>
+            <label for = "imm" id = "rightbracket"><strong>)</strong></label>
           </div>
           <Button id = 'btn6' onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>    
