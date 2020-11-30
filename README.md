@@ -55,8 +55,10 @@ Sicong He (University of Illinois at Urbana-Champaign)
 <br/>
 Wei Xia (University of Illinois at Urbana-Champaign)
 <br/>
+Pengyue Jiang(University of Illinois at Urbana-Champaign)
+<br/>
 Tianshi Zhou (Rensselaer polytechnic institute)
 <br/>
 
-## UI and visual supervisor:
+## UI supervisor:
 Blair Ding (University of the arts London)
