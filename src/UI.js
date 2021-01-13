@@ -759,7 +759,7 @@ render() {
           </div>
 
           <div className="form-inline">
-            <label for = "imm" id = "leftbracket"><strong>(</strong></label>
+            <label for = "imm" id = "leftbracket">(</label>
             <InputGroup.Prepend>
               <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
             </InputGroup.Prepend>
@@ -772,7 +772,7 @@ render() {
                 id = "ls_rs"
                 placeholder="rs"  />
             </Tippy>
-            <label for = "imm" id = "rightbracket"><strong>)</strong></label>
+            <label for = "imm" id = "rightbracket">)</label>
           </div>
           <Button id = 'btn6' onClick = {this.handleSubmit} disabled = {this.buttonDisabled()}>Encode</Button >
         </form>    
