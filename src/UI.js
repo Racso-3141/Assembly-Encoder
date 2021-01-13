@@ -742,6 +742,7 @@ render() {
               name="rt" 
               onChange={this.handleChange}
               className="form-control" 
+              size = "10"
               placeholder="rt" />
             </Tippy>
           </div>
