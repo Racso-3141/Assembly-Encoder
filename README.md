@@ -1,7 +1,7 @@
 # MIPS Encoder
 
 ## About the project
-In CS233, you may have a hard time transfering MIPS intructions to machine code. Assmebly Encoder helps you to transfer MIPS intructions in seconds!
+In CS233, you may have a hard time transfering MIPS intructions to machine code. MIPS Encoder helps you to transfer MIPS intructions in seconds!
 
 ## Usage
 <br/>
@@ -11,7 +11,7 @@ I will use 'lw $2, 3($1) as an example'
 <br/>
 
 ### Go to the website
-Click the URL: [Assembly Encoder](https://assembly-encoder.vercel.app/). 
+Click the URL: [MIPS Encoder](https://assembly-encoder.vercel.app/). 
 You will arrive to the Welcome page.
 ![](./demo/welcome.png)
 <br/>   
@@ -32,7 +32,7 @@ After input values. Click the 'Encode' button to transfer you MIPS instruction t
 <br/>   
 
 ### Output
-Now you can see your result below the input field and your instruction above. Congrats! You just encode your first MIPS instruction with 'Assembly Encoder'
+Now you can see your result below the input field and your instruction above. Congrats! You just encode your first MIPS instruction with 'MIPS Encoder'
 ![](./demo/output.png)
 <br/>   
 
