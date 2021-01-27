@@ -1,4 +1,4 @@
-# Assembly Encoder
+# MIPS Encoder
 
 ## About the project
 In CS233, you may have a hard time transfering MIPS intructions to machine code. Assmebly Encoder helps you to transfer MIPS intructions in seconds!
