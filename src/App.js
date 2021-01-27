@@ -60,7 +60,7 @@ class App extends React.Component {
     if(this.state.default) {
       title = (
         <div>
-          <h1 id = 'main'>Welcome to Assembly Encoder! My friend</h1>
+          <h1 id = 'main'>Welcome to MIPS Encoder! My friend</h1>
         </div>
       );  
     }
